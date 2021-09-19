@@ -40,6 +40,7 @@ module.exports = {
             4,
             { SwitchCase: 1 },
         ],
+        'react/prop-types': 'off',
         'react/react-in-jsx-scope': 'off',
         'linebreak-style': 'off',
         'max-classes-per-file': 'off',
