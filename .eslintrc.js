@@ -5,7 +5,10 @@ module.exports = {
     },
     globals: {},
     parserOptions: {
-        ecmaVersion: 2018
+        ecmaVersion: 2018,
+        ecmaFeatures: {
+            jsx: true
+        }
     },
     extends: [
         'airbnb-base',
@@ -22,7 +25,6 @@ module.exports = {
             'error',
             { minItems: 2 },
         ],
-        'arrow-body-style': 'error',
         'block-scoped-var': 'error',
         complexity: 'error',
         'constructor-super': 'error',
@@ -40,6 +42,7 @@ module.exports = {
             4,
             { SwitchCase: 1 },
         ],
+        'arrow-body-style': 0,
         'react/prop-types': 'off',
         'react/react-in-jsx-scope': 'off',
         'linebreak-style': 'off',
@@ -47,6 +50,12 @@ module.exports = {
         'newline-per-chained-call': 'error',
         'new-parens': 'error',
         'no-alert': 'error',
+        'import/named': 0,
+        'import/prefer-default-export': 0,
+        'import/extensions': 0,
+        'import/no-unresolved': 0,
+        'import/export': 0,
+        'import/no-named-as-default': 0,
         'no-duplicate-imports': 'error',
         'no-nested-ternary': 'error',
         'no-mixed-spaces-and-tabs': 'error',

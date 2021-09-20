@@ -122,6 +122,7 @@ code {
 .content_cards {
   display: flex;
   column-gap: 40px;
+  flex-wrap: wrap;
 }
 
 //Card
@@ -179,6 +180,7 @@ code {
 //Overlay && Drawer component
 .overlay {
   position: absolute;
+  overflow: hidden;
   left: 0px;
   bottom: 0;
   right: 0;
@@ -188,8 +190,10 @@ code {
 }
 
 .drawer {
+  display: flex;
+  flex-direction: column;
   position: absolute;
-  width: 385px;
+  width: 420px;
   padding: 30px;
   height: 100%;
   right: 0;
@@ -202,54 +206,75 @@ code {
 }
 
 .drawer_priceBlock {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   font-size: 16px;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
+
+  li {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 
   b {
     font-weight: 600;
   }
 }
 
-.drawer_button {
-  padding: 18px 20px;
+//Green button
+
+.green_button {
+  width: 100%;
+  height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: #9DD558;
   border-radius: 18px;
-  text-align: center;
+  border: 0;
+  font-weight: 600;
+  font-size: 16px;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: background-color 0.1s ease-in-out;
 
-  div {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  img {
+    position: relative;
+    left: 75px;
   }
 
-  span {
-    font-weight: bold;
-    color: white;
+  &:hover {
+    background-color: lighten(#9DD558, 5%);
   }
+
+  &:active {
+    background-color: darken(#9DD558, 5%);
+  }
+
+
 }
 
 //cartItem
+
+.cartItems {
+  flex: 1;
+  overflow-y: auto;
+}
+
 .cartItem {
   display: flex;
   justify-content: space-between;
   align-items: center;
   column-gap: 10px;
+  margin: 0px 5px 20px 0px;
   padding: 20px;
   border: 1px solid #F3F3F3;
   border-radius: 20px;
-
-  img {
-    max-width: 100%;
-    width: 70px;
-    height: 70px;
-  }
-
-  p {
-
-  }
 }
 
 .cartItem_button {
@@ -258,4 +283,16 @@ code {
   justify-content: center;
   width: 32px;
   height: 32px;
+  cursor: pointer;
+}
+
+.cartItem_img {
+  width: 70px;
+  height: 70px;
+  background-size: contain;
+  object-fit: cover;
+  background-position: 0 10px;
+  background-repeat: no-repeat;
+  margin-right: 10px;
+  transform: scale(1.5);
 }
