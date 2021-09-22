@@ -1,0 +1,51 @@
+//Card
+
+.card {
+  width: 220px;
+  border: 1px solid #F3F3F3;
+  border-radius: 40px;
+  padding: 20px;
+  transition: box-shadow 0.2s ease-in, transform 0.2s ease-in;
+
+  h4 {
+    margin-top: 15px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 14px 30px rgba(0, 0, 0, 0.05);
+  }
+}
+
+.card_footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+
+  span {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #BDBDBD;
+  }
+
+  p {
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  img:hover {
+    cursor: pointer;
+  }
+}
+
+.card_icon {
+  position: absolute;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

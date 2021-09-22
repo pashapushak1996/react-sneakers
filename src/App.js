@@ -15,10 +15,27 @@ function App() {
     ] = useState(true);
 
     const addToCart = (obj) => {
-        setFavorite((prevState) => [
-            ...prevState,
-            obj
-        ]);
+        setFavorite((prevState) => {
+            if (!prevState.length) {
+                setFavorite([
+                    ...prevState,
+                    obj
+                ]);
+                return;
+            }
+
+            const find = prevState.find((sneakers) => sneakers.id === obj.id);
+
+            if (!find) {
+                setFavorite([
+                    ...prevState,
+                    obj
+                ]);
+
+                return;
+            }
+            setFavorite(prevState);
+        });
     };
     const deleteOneFromCart = (id) => {
         setFavorite(favorite.filter((sneakers) => sneakers.id !== id));
@@ -36,7 +53,7 @@ function App() {
                 deleteOneFromFavorite={deleteOneFromCart}
                 showDrawer={showDrawer}/>
 
-            <Header showDrawer={showDrawer}/>
+            <Header favorite={favorite} showDrawer={showDrawer}/>
 
             <div className="content">
                 <div className="content_header">
@@ -51,7 +68,8 @@ function App() {
                         key={index + 1}
                         addToCart={addToCart}
                         favorite={favorite}
-                        sneakers={{ ...sneakers, id: index + 1 }}/>)}
+                        deleteOneFromCart={deleteOneFromCart}
+                        sneakers={{ ...sneakers, id: Math.round(Math.random() * 1000) }}/>)}
                 </div>
             </div>
         </div>

@@ -1,16 +1,19 @@
 import { CartItem } from '../cart-item';
+import styles from './Drawer.module.scss';
 
-export const Drawer = ({
-                           isHidden,
-                           showDrawer,
-                           favorite = [],
-                           deleteOneFromFavorite
-                       }) => {
+export const Drawer = (props) => {
+    const {
+        isHidden,
+        showDrawer,
+        favorite = [],
+        deleteOneFromFavorite
+    } = props;
+
     const price = favorite.reduce((acc, curr) => curr.price + acc, 0);
 
     return (
-        <div style={{ display: isHidden ? 'none' : 'block' }} className="overlay">
-            <div className="drawer">
+        <div style={{ display: isHidden ? 'none' : 'block' }} className={styles.overlay}>
+            <div className={styles.drawer}>
                 <div className="d-flex justify-between">
                     <h2>Корзина</h2>
                     <div onClick={() => showDrawer()} className="cartItem_button">
@@ -27,8 +30,8 @@ export const Drawer = ({
                     />)}
 
                 </div>
-                <div className="drawer_footer">
-                    <div className="drawer_priceBlock">
+                <div>
+                    <div className={styles.drawer_priceBlock}>
                         <ul>
                             <li>
                                 <span>Итого: </span>
