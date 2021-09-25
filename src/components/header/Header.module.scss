@@ -45,6 +45,20 @@
 
 .header_cart {
   display: flex;
+  position: relative;
+
+  sup {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: -10px;
+    left: 15px;
+    background-color: tomato;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    color: whitesmoke;
+  }
 
   img {
     margin-right: 15px;

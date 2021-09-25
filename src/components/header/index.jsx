@@ -1,10 +1,6 @@
 import styles from './Header.module.scss';
 
-export function Header({ showDrawer, favorite }) {
-    const totalPrice = favorite.reduce((acc, curr) => {
-        return acc + curr.price;
-    }, 0);
-
+export function Header({ onClickCart, totalPrice, cartItemsCount }) {
     return (
         <header className={styles.header}>
             <div className={styles.header_info}>
@@ -15,8 +11,9 @@ export function Header({ showDrawer, favorite }) {
                 </div>
             </div>
             <div className={styles.header_icons}>
-                <div onClick={() => showDrawer()} className={styles.header_cart}>
+                <div onClick={onClickCart} className={styles.header_cart}>
                     <img src="/img/icons/cart.svg" alt=""/>
+                    <sup>{cartItemsCount}</sup>
                     <span>{totalPrice} грн</span>
                 </div>
                 <img src="/img/icons/heart.svg" alt=""/>

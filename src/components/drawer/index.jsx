@@ -3,43 +3,37 @@ import styles from './Drawer.module.scss';
 
 export const Drawer = (props) => {
     const {
-        isHidden,
-        showDrawer,
-        favorite = [],
-        deleteOneFromFavorite
+        cartItems,
+        onClose,
+        onClickRemove,
+        totalPrice
     } = props;
-
-    const price = favorite.reduce((acc, curr) => curr.price + acc, 0);
-
     return (
-        <div style={{ display: isHidden ? 'none' : 'block' }} className={styles.overlay}>
+        <div className={styles.overlay}>
             <div className={styles.drawer}>
                 <div className="d-flex justify-between">
                     <h2>Корзина</h2>
-                    <div onClick={() => showDrawer()} className="cartItem_button">
+                    <div onClick={onClose} className="cartItem_button">
                         <img src="/img/icons/exit.svg" alt=""/>
                     </div>
                 </div>
-                {!favorite.length && <h1>Нема заказів</h1>}
-                <div className="cartItems">
-                    {favorite.length && favorite.map((sneakers) => <CartItem
-                        key={sneakers.id}
-                        sneakers={sneakers}
-                        showDrawer={showDrawer}
-                        deleteOneFromFavorite={deleteOneFromFavorite}
-                    />)}
 
+                <div className="cartItems">
+                    {cartItems.length ? cartItems.map((sneakers) => <CartItem
+                        onClickRemove={onClickRemove}
+                        key={sneakers.id}
+                        sneakers={sneakers}/>) : <div>Немає замовлень</div>}
                 </div>
                 <div>
                     <div className={styles.drawer_priceBlock}>
                         <ul>
                             <li>
                                 <span>Итого: </span>
-                                <b>{price}</b>
+                                <b>{totalPrice} грн</b>
                             </li>
                             <li>
                                 <span>Налог 5%: </span>
-                                <b>{price * 0.05}</b>
+                                <b>{totalPrice * 0.05}</b>
                             </li>
                         </ul>
                     </div>

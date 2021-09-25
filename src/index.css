@@ -37,21 +37,6 @@ code {
   margin-bottom: 40px;
 }
 
-.content_search {
-  display: flex;
-  width: 250px;
-  border: 1px solid #F3F3F3;
-  border-radius: 10px;
-  padding: 10px 10px;
-}
-.content_search img {
-  margin-right: 5px;
-}
-.content_search input {
-  border: none;
-  width: 100%;
-}
-
 .content_cards {
   display: flex;
   column-gap: 40px;

@@ -1,0 +1,16 @@
+.search {
+  display: flex;
+  width: 250px;
+  border: 1px solid #F3F3F3;
+  border-radius: 10px;
+  padding: 10px 10px;
+}
+.search img {
+  margin-right: 5px;
+}
+.search input {
+  border: none;
+  width: 100%;
+}
+
+/*# sourceMappingURL=Search.module.css.map */

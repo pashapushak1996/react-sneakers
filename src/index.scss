@@ -25,6 +25,7 @@ code {
   border-radius: 20px;
   margin: 50px auto;
 }
+
 //Content styles
 
 .content {
@@ -40,23 +41,6 @@ code {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 40px;
-}
-
-.content_search {
-  display: flex;
-  width: 250px;
-  border: 1px solid #F3F3F3;
-  border-radius: 10px;
-  padding: 10px 10px;
-
-  img {
-    margin-right: 5px;
-  }
-
-  input {
-    border: none;
-    width: 100%;
-  }
 }
 
 .content_cards {
