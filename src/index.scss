@@ -46,6 +46,7 @@ code {
 .content_cards {
   display: flex;
   column-gap: 40px;
+  row-gap: 20px;
   flex-wrap: wrap;
 }
 
@@ -79,14 +80,5 @@ code {
   &:active {
     background-color: darken(#9DD558, 5%);
   }
-
-
-}
-
-//cartItem
-
-.cartItems {
-  flex: 1;
-  overflow-y: auto;
 }
 

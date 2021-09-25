@@ -40,6 +40,7 @@ code {
 .content_cards {
   display: flex;
   column-gap: 40px;
+  row-gap: 20px;
   flex-wrap: wrap;
 }
 
@@ -67,11 +68,6 @@ code {
 }
 .green_button:active {
   background-color: #91d044;
-}
-
-.cartItems {
-  flex: 1;
-  overflow-y: auto;
 }
 
 /*# sourceMappingURL=index.css.map */
