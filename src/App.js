@@ -1,38 +1,43 @@
 /* eslint-disable */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Card, Drawer, Header, Search } from './components';
-import db from './data/db';
+import { sneakersService } from './services';
 
 function App() {
 
     const [openedCart, setOpenedCart] = useState(false);
+    const [items, setItems] = useState([]);
+    const [cartItems, setCartItems] = useState([]);
+    const [searchValue, setSearchValue] = useState('');
 
-    const [foundedSneakers, setFoundedSneakers] = useState([]);
-
-
-    const [
-        cartItems,
-        setCartItems
-    ] = useState([]);
+    useEffect(async () => {
+        const sneakers = await sneakersService.getAllSneakers();
+        setItems(sneakers);
+        const cartItems = await sneakersService.getAllCartItem();
+        setCartItems(cartItems);
+    }, []);
 
     const totalPrice = cartItems.reduce((acc, curr) => acc + curr.price, 0);
 
-    const addToCart = (obj) => {
-        const isExist = cartItems.find((sneakersObj) => sneakersObj.id === obj.id);
-
-        if (isExist) {
-            return;
-        }
-        setCartItems((prevState) => [
-            ...prevState,
-            obj
-        ]);
+    const addToCart = async (obj) => {
+        await sneakersService.createCartItem(obj);
+        setCartItems((prevState) => [...prevState, obj]);
     };
 
-    const removeFromCart = (sneakersId) => {
+    const removeFromCart = async (sneakersId) => {
+        await sneakersService.deleteCartItemById(sneakersId);
         setCartItems(cartItems.filter((sneakers) => sneakers.id !== sneakersId));
     };
+
+    const searchByValue = (items, searchValue) => {
+        const lowerCaseSearchValue = searchValue.toLowerCase();
+
+        return items.filter((sneakers) =>
+            sneakers.description
+                .toLowerCase()
+                .includes(lowerCaseSearchValue));
+    }
 
     return (
         <div className="wrapper clear">
@@ -47,15 +52,16 @@ function App() {
                     cartItemsCount={cartItems.length}/>
             <div className="content">
                 <div className="content_header">
-                    <h1>Все кроссовки</h1>
-                    <Search
-                        setFoundedSneakers={setFoundedSneakers}/>
+                    {searchValue ? <h1>Ищем по запросу {searchValue}</h1> : <h1>Все кроссовки</h1>}
+                    <Search searchValue={searchValue}
+                            setSearchValue={setSearchValue}/>
                 </div>
                 <div className="content_cards">
-                    {db.map((sneakers, index) => <Card
-                        key={index + 1}
-                        sneakers={sneakers}
-                        onClickPlus={addToCart}/>)}
+                    {searchByValue(items, searchValue)
+                        .map((sneakers) => <Card
+                            key={sneakers.id}
+                            sneakers={sneakers}
+                            onClickPlus={addToCart}/>)}
                 </div>
             </div>
         </div>
