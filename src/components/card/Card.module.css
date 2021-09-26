@@ -37,9 +37,11 @@
 
 .card_icon {
   position: absolute;
+  transition: transform 0.2s ease-in-out;
 }
 .card_icon:hover {
   cursor: pointer;
+  transform: scale(1.2);
 }
 
 /*# sourceMappingURL=Card.module.css.map */

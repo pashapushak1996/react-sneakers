@@ -1,5 +1,6 @@
 .search {
   display: flex;
+  align-items: center;
   width: 250px;
   border: 1px solid #F3F3F3;
   border-radius: 10px;
@@ -11,6 +12,12 @@
 .search input {
   border: none;
   width: 100%;
+}
+
+.search_btn {
+  width: 20px;
+  height: 15px;
+  position: relative;
 }
 
 /*# sourceMappingURL=Search.module.css.map */

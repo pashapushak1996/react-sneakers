@@ -20,34 +20,28 @@
   right: 0;
   background: #FFFFFF;
   box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
-
-  h2 {
-    margin-bottom: 30px;
-  }
+}
+.drawer h2 {
+  margin-bottom: 30px;
 }
 
 .drawer_priceBlock {
   font-size: 16px;
   margin-bottom: 30px;
-
-  b {
-    font-weight: 600;
-  }
-
-  li {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-
-  li:last-child {
-    margin-bottom: 0;
-  }
 }
-
-//Cart
+.drawer_priceBlock b {
+  font-weight: 600;
+}
+.drawer_priceBlock li {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.drawer_priceBlock li:last-child {
+  margin-bottom: 0;
+}
 
 .emptyCart {
   flex: 1;
@@ -55,28 +49,20 @@
   flex-direction: column;
   justify-content: center;
   text-align: center;
-
-  h3 {
-    margin-bottom: 20px;
-  }
-
-  p {
-    margin-bottom: 20px;
-    color: #B5B5B5;
-  }
-
-  button {
-
-    img {
-      position: relative;
-      left: -25%;
-    }
-
-    &:hover img {
-      transform: translateX(-5px);
-    }
-  }
-
+}
+.emptyCart h3 {
+  margin-bottom: 20px;
+}
+.emptyCart p {
+  margin-bottom: 20px;
+  color: #B5B5B5;
+}
+.emptyCart button img {
+  position: relative;
+  left: -25%;
+}
+.emptyCart button:hover img {
+  transform: translateX(-5px);
 }
 
 .emptyCartImage {
@@ -95,3 +81,5 @@
   flex: 1;
   overflow-y: auto;
 }
+
+/*# sourceMappingURL=Drawer.module.css.map */

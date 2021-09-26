@@ -9,26 +9,45 @@ function App() {
     const [openedCart, setOpenedCart] = useState(false);
     const [items, setItems] = useState([]);
     const [cartItems, setCartItems] = useState([]);
+    const [favorites, setFavorites] = useState([]);
     const [searchValue, setSearchValue] = useState('');
 
     useEffect(async () => {
-        const sneakers = await sneakersService.getAllSneakers();
+        const [sneakers, cartItems, favorites] = await Promise.all([sneakersService.getAllSneakers(), sneakersService.getAllCartItems(), sneakersService.getAllFavoriteItems()]);
+
         setItems(sneakers);
-        const cartItems = await sneakersService.getAllCartItem();
         setCartItems(cartItems);
+        setFavorites(favorites);
     }, []);
+
 
     const totalPrice = cartItems.reduce((acc, curr) => acc + curr.price, 0);
 
-    const addToCart = async (obj) => {
-        await sneakersService.createCartItem(obj);
-        setCartItems((prevState) => [...prevState, obj]);
+    const onAddToFavorites = async (obj) => {
+        const createdFavoriteItem = await sneakersService.createFavoriteItem(obj);
+        console.log(createdFavoriteItem);
+
+        setFavorites(prevState => [...prevState, createdFavoriteItem]);
     };
 
-    const removeFromCart = async (sneakersId) => {
+    const onRemoveFromFavorites = async (sneakersId) => {
+        await sneakersService.deleteFavoriteItem(sneakersId);
+
+        setFavorites(favorites.filter((sneakers) => sneakers.id !== sneakersId));
+    };
+
+    const onAddToCart = async ({ imageUrl, description, price }) => {
+        const createdCartItem = await sneakersService.createCartItem({ imageUrl, description, price });
+
+        setCartItems((prevState) => [...prevState, createdCartItem]);
+    };
+
+    const onRemoveFromCart = async (sneakersId) => {
         await sneakersService.deleteCartItemById(sneakersId);
+
         setCartItems(cartItems.filter((sneakers) => sneakers.id !== sneakersId));
     };
+
 
     const searchByValue = (items, searchValue) => {
         const lowerCaseSearchValue = searchValue.toLowerCase();
@@ -39,16 +58,23 @@ function App() {
                 .includes(lowerCaseSearchValue));
     }
 
+    const toggleOpenedCart = () => {
+        setOpenedCart(prevState => !prevState);
+        // eslint-disable-next-line no-undef
+        const [body] = document.getElementsByTagName('body');
+        body.classList.toggle('noScroll', !openedCart);
+    }
+
     return (
         <div className="wrapper clear">
             {openedCart &&
             <Drawer totalPrice={totalPrice}
-                    onClickRemove={removeFromCart}
+                    onClickRemove={onRemoveFromCart}
                     cartItems={cartItems}
-                    onClose={() => setOpenedCart(false)}/>
+                    onClose={() => toggleOpenedCart()}/>
             }
             <Header totalPrice={totalPrice}
-                    onClickCart={() => setOpenedCart(true)}
+                    onClickCart={() => toggleOpenedCart()}
                     cartItemsCount={cartItems.length}/>
             <div className="content">
                 <div className="content_header">
@@ -61,7 +87,11 @@ function App() {
                         .map((sneakers) => <Card
                             key={sneakers.id}
                             sneakers={sneakers}
-                            onClickPlus={addToCart}/>)}
+                            cartItems={cartItems}
+                            favorites={favorites}
+                            onClickPlus={() => onAddToCart(sneakers)}
+                            onClickFavorite={() => onAddToFavorites(sneakers)}
+                            onRemoveFromFavorites={onRemoveFromFavorites}/>)}
                 </div>
             </div>
         </div>

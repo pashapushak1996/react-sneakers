@@ -1,17 +1,20 @@
 import { CartItem } from '../cart-item';
 import styles from './Drawer.module.scss';
 
-const EmptyCart = () => {
+const EmptyCart = ({ onClose }) => {
     return (
         <div className={styles.emptyCart}>
+            <div className={styles.emptyCartImage}>
+                <img src="/img/emptyCart.svg" alt=""/>
+            </div>
             <h3>Корзина пустая</h3>
-            <img className={styles.emptyCartImage} src="/img/emptyCart.svg" alt=""/>
             <p>Добавте хоча б одну парку кросівок, щоб зробити заказ</p>
-            <button className="green_button">
-                <span>Вернутись назад</span>
+            <button onClick={onClose} className="green_button">
                 <img src="/img/icons/arrow-left.svg" alt=""/>
+                <span>Вернутись назад</span>
             </button>
-        </div>);
+        </div>
+    );
 };
 
 export const Drawer = (props) => {
@@ -19,8 +22,9 @@ export const Drawer = (props) => {
         cartItems,
         onClose,
         onClickRemove,
-        totalPrice
+        totalPrice,
     } = props;
+
     return (
         <div className={styles.overlay}>
             <div className={styles.drawer}>
@@ -31,7 +35,7 @@ export const Drawer = (props) => {
                     </div>
                 </div>
                 {!cartItems.length
-                    ? <EmptyCart/>
+                    ? <EmptyCart isSuccess={cartItems.length} onClose={onClose}/>
                     : <div className={styles.cartItems}>
                         <div>
                             {cartItems.length ? cartItems.map((sneakers) => <CartItem

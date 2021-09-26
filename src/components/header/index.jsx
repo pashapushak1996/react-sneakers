@@ -1,6 +1,7 @@
 import styles from './Header.module.scss';
 
 export function Header({ onClickCart, totalPrice, cartItemsCount }) {
+    console.log(onClickCart);
     return (
         <header className={styles.header}>
             <div className={styles.header_info}>

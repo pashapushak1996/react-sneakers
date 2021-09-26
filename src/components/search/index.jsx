@@ -11,6 +11,9 @@ export const Search = (props) => {
                 onChange={({ target }) => setSearchValue(target.value)}
                 type="text"
                 placeholder='Поиск...'/>
+            {searchValue && <div onClick={() => setSearchValue('')} className={styles.search_btn}>
+                <img src="/img/icons/exit.svg" alt=""/>
+            </div>}
         </div>
     );
 };

@@ -6,13 +6,29 @@ export const sneakersService = {
 
         return data;
     },
-    getAllCartItem: async () => {
+    getAllCartItems: async () => {
         const { data } = await instance.get('/cart');
 
         return data;
     },
+    getAllFavoriteItems: async () => {
+        const { data } = await instance.get('/favorites');
+
+        return data;
+    },
+
+    createFavoriteItem: async (obj) => {
+        const { data } = await instance.post('/favorites', obj);
+
+        return data;
+    },
+    deleteFavoriteItem: async (id) => {
+        await instance.delete(`/favorites/${id}`);
+    },
     createCartItem: async (obj) => {
-        await instance.post('/cart', obj);
+        const { data } = await instance.post('/cart', obj);
+
+        return data;
     },
 
     deleteCartItemById: async (id) => {

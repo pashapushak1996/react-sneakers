@@ -15,6 +15,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
+.noScroll {
+  overflow: hidden;
+}
+
 .wrapper {
   max-width: 1080px;
   background: #FFFFFF;
@@ -57,14 +61,17 @@ code {
   font-size: 16px;
   color: #FFFFFF;
   cursor: pointer;
-  transition: background-color 0.1s ease-in-out;
+  transition: background-color 0.1s ease-in-out, transfrorm 0.5s ease-in-out;
 }
 .green_button img {
   position: relative;
-  left: 75px;
+  left: 25%;
 }
 .green_button:hover {
   background-color: #a9da6c;
+}
+.green_button:hover img {
+  transform: translateX(5px);
 }
 .green_button:active {
   background-color: #91d044;
