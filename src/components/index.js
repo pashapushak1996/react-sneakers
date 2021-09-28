@@ -4,3 +4,5 @@ export * from './cart-item';
 export * from './drawer';
 export * from './header';
 export * from './search';
+export * from './title';
+export * from './card-list';

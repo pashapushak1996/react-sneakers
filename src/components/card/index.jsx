@@ -7,24 +7,14 @@ export const Card = (props) => {
         cartItems,
         favorites,
         onClickFavorite,
-        onRemoveFromFavorites
     } = props;
 
     const isAddedItem = cartItems.some((item) => item.description.includes(sneakers.description));
     const isFavoriteItem = favorites.some((item) => item.description.includes(sneakers.description));
 
-    const toggleAddOrRemove = () => {
-        if (isFavoriteItem) {
-            const foundedItem = favorites.find((item) => item.description.includes(sneakers.description));
-            onRemoveFromFavorites(foundedItem.id);
-            return;
-        }
-        onClickFavorite();
-    };
-
     return (
         <div className={styles.card}>
-            <div onClick={() => toggleAddOrRemove(sneakers.id)} className={styles.card_icon}>
+            <div onClick={() => onClickFavorite(sneakers)} className={styles.card_icon}>
                 <img src={isFavoriteItem
                     ? '/img/icons/like.svg'
                     : '/img/icons/unlike.svg'} alt=""/>

@@ -1,45 +1,81 @@
-/* eslint-disable */
 import { useEffect, useState } from 'react';
+import { Route } from 'react-router-dom';
 
-import { Card, Drawer, Header, Search } from './components';
+import { Drawer, Header } from './components';
 import { sneakersService } from './services';
+import { Home } from './pages/Home';
+import { Favorites } from './pages/Favorites';
 
 function App() {
+    const [
+        openedCart,
+        setOpenedCart
+    ] = useState(false);
 
-    const [openedCart, setOpenedCart] = useState(false);
-    const [items, setItems] = useState([]);
-    const [cartItems, setCartItems] = useState([]);
-    const [favorites, setFavorites] = useState([]);
-    const [searchValue, setSearchValue] = useState('');
+    const [
+        items,
+        setItems
+    ] = useState([]);
+
+    const [
+        cartItems,
+        setCartItems
+    ] = useState([]);
+
+    const [
+        favorites,
+        setFavorites
+    ] = useState([]);
+
+    const [
+        searchValue,
+        setSearchValue
+    ] = useState('');
 
     useEffect(async () => {
-        const [sneakers, cartItems, favorites] = await Promise.all([sneakersService.getAllSneakers(), sneakersService.getAllCartItems(), sneakersService.getAllFavoriteItems()]);
+        const [
+            sneakersArr,
+            cartItemsArr,
+            favoritesArr
+        ] = await Promise.all(
+            [
+                sneakersService.getAllSneakers(),
+                sneakersService.getAllCartItems(),
+                sneakersService.getAllFavoriteItems()
+            ]
+        );
 
-        setItems(sneakers);
-        setCartItems(cartItems);
-        setFavorites(favorites);
+        setItems(sneakersArr);
+        setCartItems(cartItemsArr);
+        setFavorites(favoritesArr);
     }, []);
-
 
     const totalPrice = cartItems.reduce((acc, curr) => acc + curr.price, 0);
 
     const onAddToFavorites = async (obj) => {
+        const isFavorite = favorites.find((item) => item.id === obj.id);
+
+        if (isFavorite) {
+            await sneakersService.deleteFavoriteItem(obj.id);
+            setFavorites((prevState) => prevState.filter((item) => item.id !== obj.id));
+            return;
+        }
+
         const createdFavoriteItem = await sneakersService.createFavoriteItem(obj);
-        console.log(createdFavoriteItem);
 
-        setFavorites(prevState => [...prevState, createdFavoriteItem]);
-    };
-
-    const onRemoveFromFavorites = async (sneakersId) => {
-        await sneakersService.deleteFavoriteItem(sneakersId);
-
-        setFavorites(favorites.filter((sneakers) => sneakers.id !== sneakersId));
+        setFavorites((prevState) => [
+            ...prevState,
+            createdFavoriteItem
+        ]);
     };
 
     const onAddToCart = async ({ imageUrl, description, price }) => {
         const createdCartItem = await sneakersService.createCartItem({ imageUrl, description, price });
 
-        setCartItems((prevState) => [...prevState, createdCartItem]);
+        setCartItems((prevState) => [
+            ...prevState,
+            createdCartItem
+        ]);
     };
 
     const onRemoveFromCart = async (sneakersId) => {
@@ -48,55 +84,47 @@ function App() {
         setCartItems(cartItems.filter((sneakers) => sneakers.id !== sneakersId));
     };
 
+    const searchByValue = (array, value) => {
+        const lowerCaseSearchValue = value.toLowerCase();
 
-    const searchByValue = (items, searchValue) => {
-        const lowerCaseSearchValue = searchValue.toLowerCase();
-
-        return items.filter((sneakers) =>
-            sneakers.description
-                .toLowerCase()
-                .includes(lowerCaseSearchValue));
-    }
+        return array.filter((sneakers) => sneakers.description
+            .toLowerCase()
+            .includes(lowerCaseSearchValue));
+    };
 
     const toggleOpenedCart = () => {
-        setOpenedCart(prevState => !prevState);
+        setOpenedCart((prevState) => !prevState);
         // eslint-disable-next-line no-undef
         const [body] = document.getElementsByTagName('body');
         body.classList.toggle('noScroll', !openedCart);
-    }
+    };
 
     return (
         <div className="wrapper clear">
-            {openedCart &&
-            <Drawer totalPrice={totalPrice}
-                    onClickRemove={onRemoveFromCart}
-                    cartItems={cartItems}
-                    onClose={() => toggleOpenedCart()}/>
+            {openedCart
+            && <Drawer totalPrice={totalPrice}
+                       onClickRemove={onRemoveFromCart}
+                       cartItems={cartItems}
+                       onClose={() => toggleOpenedCart()}/>
             }
             <Header totalPrice={totalPrice}
                     onClickCart={() => toggleOpenedCart()}
                     cartItemsCount={cartItems.length}/>
-            <div className="content">
-                <div className="content_header">
-                    {searchValue ? <h1>Ищем по запросу {searchValue}</h1> : <h1>Все кроссовки</h1>}
-                    <Search searchValue={searchValue}
-                            setSearchValue={setSearchValue}/>
-                </div>
-                <div className="content_cards">
-                    {searchByValue(items, searchValue)
-                        .map((sneakers) => <Card
-                            key={sneakers.id}
-                            sneakers={sneakers}
-                            cartItems={cartItems}
-                            favorites={favorites}
-                            onClickPlus={() => onAddToCart(sneakers)}
-                            onClickFavorite={() => onAddToFavorites(sneakers)}
-                            onRemoveFromFavorites={onRemoveFromFavorites}/>)}
-                </div>
-            </div>
+            <Route path={'/'} exact render={() => <Home searchValue={searchValue}
+                                                        setSearchValue={setSearchValue}
+                                                        searchByValue={searchByValue}
+                                                        items={items}
+                                                        onAddToFavorites={onAddToFavorites}
+                                                        onAddToCart={onAddToCart}
+                                                        cartItems={cartItems}
+                                                        favorites={favorites}/>}/>
+            <Route path={'/favorites'} exact render={() => <Favorites
+                onAddToFavorites={onAddToFavorites}
+                onAddToCart={onAddToCart}
+                cartItems={cartItems}
+                favorites={favorites}/>}/>
         </div>
     );
 }
-
 
 export default App;

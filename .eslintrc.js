@@ -25,6 +25,7 @@ module.exports = {
             'error',
             { minItems: 2 },
         ],
+        'no-shadow': 'off',
         'block-scoped-var': 'error',
         complexity: 'error',
         'constructor-super': 'error',
@@ -38,7 +39,7 @@ module.exports = {
         'guard-for-in': 'off',
         'global-require': 'off',
         indent: [
-            'warn',
+            'off',
             4,
             { SwitchCase: 1 },
         ],
