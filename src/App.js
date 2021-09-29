@@ -53,11 +53,11 @@ function App() {
     const totalPrice = cartItems.reduce((acc, curr) => acc + curr.price, 0);
 
     const onAddToFavorites = async (obj) => {
-        const isFavorite = favorites.find((item) => item.id === obj.id);
+        const favoriteItem = favorites.find((item) => +item.currId === +obj.currId);
 
-        if (isFavorite) {
-            await sneakersService.deleteFavoriteItem(obj.id);
-            setFavorites((prevState) => prevState.filter((item) => item.id !== obj.id));
+        if (favoriteItem) {
+            await sneakersService.deleteFavoriteItem(favoriteItem.id);
+            setFavorites((prevState) => prevState.filter((product) => product.currId !== obj.currId));
             return;
         }
 
@@ -69,8 +69,28 @@ function App() {
         ]);
     };
 
-    const onAddToCart = async ({ imageUrl, description, price }) => {
-        const createdCartItem = await sneakersService.createCartItem({ imageUrl, description, price });
+    const onAddToCart = async (item) => {
+        const {
+            currId,
+            imageUrl,
+            description,
+            price
+        } = item;
+
+        const cartItem = cartItems.find((item) => +item.currId === +currId);
+
+        if (cartItem) {
+            await sneakersService.deleteCartItemById(cartItem.id);
+            setCartItems((prevState) => prevState.filter((product) => product.currId !== currId));
+            return;
+        }
+
+        const createdCartItem = await sneakersService.createCartItem({
+            currId,
+            imageUrl,
+            description,
+            price
+        });
 
         setCartItems((prevState) => [
             ...prevState,

@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 import styles from './Header.module.scss';
 
 export function Header({ onClickCart, totalPrice, cartItemsCount }) {
-    console.log(onClickCart);
     return (
         <header className={styles.header}>
             <NavLink to={'/'}>

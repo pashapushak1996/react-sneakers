@@ -7,11 +7,13 @@ export const CardList = (props) => {
         favorites,
         onAddToCart,
         onAddToFavorites,
+        searchByValue,
+        searchValue
     } = props;
 
     return (
         <div className="content_cards">
-            {items
+            {searchByValue(items, searchValue)
                 .map((sneakers) => <Card
                     key={sneakers.id}
                     sneakers={sneakers}

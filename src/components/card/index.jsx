@@ -27,9 +27,9 @@ export const Card = (props) => {
                     <p>{sneakers.price}</p>
                 </div>
                 <img onClick={onClickPlus} src={
-                    !isAddedItem
-                        ? '/img/icons/plus.svg'
-                        : '/img/icons/success.svg'} alt=""/>
+                    isAddedItem
+                        ? '/img/icons/success.svg'
+                        : '/img/icons/plus.svg'} alt=""/>
             </div>
         </div>
     );
