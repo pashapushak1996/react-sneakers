@@ -6,3 +6,4 @@ export * from './header';
 export * from './search';
 export * from './title';
 export * from './card-list';
+export * from './loader';

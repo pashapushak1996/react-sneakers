@@ -32,7 +32,13 @@ function App() {
         setSearchValue
     ] = useState('');
 
-    useEffect(async () => {
+    const [
+        isLoading,
+        setIsLoading
+    ] = useState(true);
+
+    const fetchData = async () => {
+        setIsLoading(true);
         const [
             sneakersArr,
             cartItemsArr,
@@ -44,10 +50,15 @@ function App() {
                 sneakersService.getAllFavoriteItems()
             ]
         );
+        setIsLoading(false);
 
         setItems(sneakersArr);
         setCartItems(cartItemsArr);
         setFavorites(favoritesArr);
+    };
+
+    useEffect(() => {
+        fetchData();
     }, []);
 
     const totalPrice = cartItems.reduce((acc, curr) => acc + curr.price, 0);
@@ -137,7 +148,8 @@ function App() {
                                                         onAddToFavorites={onAddToFavorites}
                                                         onAddToCart={onAddToCart}
                                                         cartItems={cartItems}
-                                                        favorites={favorites}/>}/>
+                                                        favorites={favorites}
+                                                        isLoading={isLoading}/>}/>
             <Route path={'/favorites'} exact render={() => <Favorites
                 onAddToFavorites={onAddToFavorites}
                 onAddToCart={onAddToCart}

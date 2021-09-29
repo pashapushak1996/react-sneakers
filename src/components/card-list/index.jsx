@@ -8,19 +8,22 @@ export const CardList = (props) => {
         onAddToCart,
         onAddToFavorites,
         searchByValue,
-        searchValue
+        searchValue,
+        isLoading
     } = props;
 
     return (
         <div className="content_cards">
-            {searchByValue(items, searchValue)
-                .map((sneakers) => <Card
-                    key={sneakers.id}
+            {(isLoading ? [...Array(8)] : searchByValue(items, searchValue))
+                .map((sneakers, index) => <Card
+                    key={index}
                     sneakers={sneakers}
                     cartItems={cartItems}
                     favorites={favorites}
                     onClickPlus={() => onAddToCart(sneakers)}
-                    onClickFavorite={() => onAddToFavorites(sneakers)}/>)}
+                    onClickFavorite={() => onAddToFavorites(sneakers)}
+                    isLoading={isLoading}
+                />)}
         </div>
     );
 };
