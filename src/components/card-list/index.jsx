@@ -17,16 +17,16 @@ export const CardList = (props) => {
 
     return (
         <div className="content_cards">
-            {(isLoading ? [...Array(8)] : searchByValue(items, searchValue))
+            { (isLoading ? [...Array(8)] : searchByValue(items, searchValue))
                 .map((sneakers, index) => <Card
-                    key={index}
-                    sneakers={sneakers}
-                    cartItems={cartItems}
-                    favorites={favorites}
-                    onClickPlus={() => onAddToCart(sneakers)}
-                    onClickFavorite={() => onAddToFavorites(sneakers)}
-                    isLoading={isLoading}
-                />)}
+                    key={ index }
+                    sneakers={ sneakers }
+                    cartItems={ cartItems }
+                    favorites={ favorites }
+                    onClickPlus={ () => onAddToCart(sneakers) }
+                    onClickFavorite={ () => onAddToFavorites(sneakers) }
+                    isLoading={ isLoading }
+                />) }
         </div>
     );
 };
