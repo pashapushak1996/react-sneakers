@@ -1,8 +1,13 @@
+import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import styles from './Header.module.scss';
 
-export function Header({ onClickCart, totalPrice, cartItemsCount }) {
+import AppContext from '../../context';
+
+export const Header = ({ onClickCart }) => {
+    const { cartItems, totalPrice } = useContext(AppContext);
+
     return (
         <header className={styles.header}>
             <NavLink to={'/'}>
@@ -17,7 +22,7 @@ export function Header({ onClickCart, totalPrice, cartItemsCount }) {
             <div className={styles.header_icons}>
                 <div onClick={onClickCart} className={styles.header_cart}>
                     <img src="/img/icons/cart.svg" alt=""/>
-                    <sup>{cartItemsCount}</sup>
+                    <sup>{cartItems.length}</sup>
                     <span>{totalPrice} грн</span>
                 </div>
                 <NavLink to={'/favorites'}>
@@ -27,4 +32,4 @@ export function Header({ onClickCart, totalPrice, cartItemsCount }) {
             </div>
         </header>
     );
-}
+};

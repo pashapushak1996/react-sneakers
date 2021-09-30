@@ -1,12 +1,16 @@
+import { useContext } from 'react';
+
 import { Card, Title } from '../components';
+import AppContext from '../context';
 
 export const Favorites = (props) => {
+    const { cartItems, favorites } = useContext(AppContext);
+
     const {
-        cartItems,
-        favorites,
         onAddToCart,
         onAddToFavorites,
     } = props;
+
     return (
         <div className='p-40'>
             <div className='mb-40'>

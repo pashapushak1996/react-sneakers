@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 import { Route } from 'react-router-dom';
 
 import { Drawer, Header } from './components';
-import { sneakersService } from './services';
 import { Home } from './pages/Home';
 import { Favorites } from './pages/Favorites';
+
+import AppContext from './context';
+import { sneakersService } from './services';
 
 function App() {
     const [
@@ -38,23 +40,29 @@ function App() {
     ] = useState(true);
 
     const fetchData = async () => {
-        setIsLoading(true);
-        const [
-            sneakersArr,
-            cartItemsArr,
-            favoritesArr
-        ] = await Promise.all(
-            [
-                sneakersService.getAllSneakers(),
-                sneakersService.getAllCartItems(),
-                sneakersService.getAllFavoriteItems()
-            ]
-        );
-        setIsLoading(false);
+        try {
+            setIsLoading(true);
 
-        setItems(sneakersArr);
-        setCartItems(cartItemsArr);
-        setFavorites(favoritesArr);
+            const [
+                sneakersArr,
+                cartItemsArr,
+                favoritesArr
+            ] = await Promise.all(
+                [
+                    sneakersService.getAllSneakers(),
+                    sneakersService.getAllCartItems(),
+                    sneakersService.getAllFavoriteItems()
+                ]
+            );
+
+            setItems(sneakersArr);
+            setCartItems(cartItemsArr);
+            setFavorites(favoritesArr);
+        } catch (e) {
+            console.log(e);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     useEffect(() => {
@@ -131,31 +139,34 @@ function App() {
     };
 
     return (
-        <div className="wrapper clear">
-            {openedCart
-            && <Drawer totalPrice={totalPrice}
-                       onClickRemove={onRemoveFromCart}
-                       cartItems={cartItems}
-                       onClose={() => toggleOpenedCart()}/>
-            }
-            <Header totalPrice={totalPrice}
-                    onClickCart={() => toggleOpenedCart()}
-                    cartItemsCount={cartItems.length}/>
-            <Route path={'/'} exact render={() => <Home searchValue={searchValue}
-                                                        setSearchValue={setSearchValue}
-                                                        searchByValue={searchByValue}
-                                                        items={items}
-                                                        onAddToFavorites={onAddToFavorites}
-                                                        onAddToCart={onAddToCart}
-                                                        cartItems={cartItems}
-                                                        favorites={favorites}
-                                                        isLoading={isLoading}/>}/>
-            <Route path={'/favorites'} exact render={() => <Favorites
-                onAddToFavorites={onAddToFavorites}
-                onAddToCart={onAddToCart}
-                cartItems={cartItems}
-                favorites={favorites}/>}/>
-        </div>
+        <AppContext.Provider value={{
+            items,
+            cartItems,
+            favorites,
+            totalPrice
+        }}>
+            <div className="wrapper clear">
+                {openedCart
+                && <Drawer
+                    onClickRemove={onRemoveFromCart}
+                    cartItems={cartItems}
+                    onClose={() => toggleOpenedCart()}/>
+                }
+                <Header
+                    onClickCart={() => toggleOpenedCart()}/>
+                <Route path={'/'} exact render={() => <Home searchValue={searchValue}
+                                                            setSearchValue={setSearchValue}
+                                                            searchByValue={searchByValue}
+                                                            onAddToFavorites={onAddToFavorites}
+                                                            onAddToCart={onAddToCart}
+                                                            isLoading={isLoading}/>}/>
+                <Route path={'/favorites'} exact render={() => <Favorites
+                    onAddToFavorites={onAddToFavorites}
+                    onAddToCart={onAddToCart}
+                    cartItems={cartItems}
+                    favorites={favorites}/>}/>
+            </div>
+        </AppContext.Provider>
     );
 }
 
