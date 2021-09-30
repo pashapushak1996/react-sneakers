@@ -1,8 +1,9 @@
 import { useContext } from 'react';
 
+import AppContext from '../../context';
+
 import { Card } from '../card';
 
-import AppContext from '../../context';
 
 export const CardList = (props) => {
     const { items, cartItems, favorites } = useContext(AppContext);
