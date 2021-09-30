@@ -40,6 +40,9 @@
 .header_cart {
   display: flex;
   position: relative;
+  border: none;
+  outline: none;
+  background-color: #FFFFFF;
 }
 .header_cart sup {
   display: flex;

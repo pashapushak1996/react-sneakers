@@ -77,8 +77,8 @@ function App() {
 
         const createdCartItem = await sneakersService.createCartItem({
             currId,
-            imageUrl,
             description,
+            imageUrl,
             price
         });
 
@@ -104,16 +104,15 @@ function App() {
 
     const toggleOpenedCart = () => {
         setOpenedCart((prevState) => !prevState);
-        // eslint-disable-next-line no-undef
         const [body] = document.getElementsByTagName('body');
         body.classList.toggle('noScroll', !openedCart);
     };
 
     return (
         <AppContext.Provider value={ {
-            items,
             cartItems,
             favorites,
+            items,
             totalPrice
         } }>
             <div className="wrapper clear">

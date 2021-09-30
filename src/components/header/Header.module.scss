@@ -46,6 +46,9 @@
 .header_cart {
   display: flex;
   position: relative;
+  border: none;
+  outline: none;
+  background-color: #FFFFFF;
 
   sup {
     display: flex;

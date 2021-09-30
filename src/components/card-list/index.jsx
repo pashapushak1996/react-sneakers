@@ -27,6 +27,8 @@ export const CardList = (props) => {
                     onClickPlus={ () => onAddToCart(sneakers) }
                     onClickFavorite={ () => onAddToFavorites(sneakers) }
                     isLoading={ isLoading }
+                    isAdded={ cartItems.some((item) => item.description.includes(sneakers.description)) }
+                    isFavorite={ favorites.some((item) => item.description.includes(sneakers.description)) }
                 />) }
         </div>
     );

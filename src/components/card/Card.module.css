@@ -5,6 +5,11 @@
   padding: 20px;
   transition: box-shadow 0.2s ease-in, transform 0.2s ease-in;
 }
+.card button {
+  border: none;
+  outline: none;
+  background-color: #FFFFFF;
+}
 .card h4 {
   margin-top: 15px;
   font-style: normal;

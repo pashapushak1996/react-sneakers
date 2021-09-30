@@ -6,13 +6,10 @@ export const Card = (props) => {
         sneakers,
         onClickPlus,
         onClickFavorite,
-        cartItems,
-        favorites,
-        isLoading
+        isLoading,
+        isFavorite,
+        isAdded
     } = props;
-
-    const isCartItem = cartItems.length && cartItems.some((item) => item.description.includes(sneakers.description));
-    const isFavoriteItem = favorites.length && favorites.some((item) => item.description.includes(sneakers.description));
 
     const handleClickFavorite = () => {
         onClickFavorite(sneakers);
@@ -24,24 +21,26 @@ export const Card = (props) => {
 
     return (
         isLoading
-            ? <div className={styles.card}><Loader/></div>
-            : <div className={styles.card}>
-                <div onClick={handleClickFavorite} className={styles.card_icon}>
-                    <img src={isFavoriteItem
+            ? <div className={ styles.card }><Loader/></div>
+            : <div className={ styles.card }>
+                <button onClick={ handleClickFavorite } className={ styles.card_icon }>
+                    <img src={ isFavorite
                         ? '/img/icons/like.svg'
-                        : '/img/icons/unlike.svg'} alt=""/>
-                </div>
-                <img src={sneakers.imageUrl} alt=""/>
-                <h4>{sneakers.description}</h4>
-                <div className={styles.card_footer}>
+                        : '/img/icons/unlike.svg' } alt=""/>
+                </button>
+                <img src={ sneakers.imageUrl } alt=""/>
+                <h4>{ sneakers.description }</h4>
+                <div className={ styles.card_footer }>
                     <div>
                         <span>Цена:</span>
-                        <p>{sneakers.price}</p>
+                        <p>{ sneakers.price }</p>
                     </div>
-                    <img onClick={handleClickPlus} src={
-                        isCartItem
-                            ? '/img/icons/success.svg'
-                            : '/img/icons/plus.svg'} alt=""/>
+                    <button onClick={ handleClickPlus }>
+                        <img src={
+                            isAdded
+                                ? '/img/icons/success.svg'
+                                : '/img/icons/plus.svg' } alt=""/>
+                    </button>
                 </div>
             </div>
     );
