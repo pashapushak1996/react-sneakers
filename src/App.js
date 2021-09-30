@@ -2,42 +2,19 @@ import { useEffect, useState } from 'react';
 import { Route } from 'react-router-dom';
 
 import { Drawer, Header } from './components';
-import { Home } from './pages/Home';
-import { Favorites } from './pages/Favorites';
-
 import AppContext from './context';
+import { Favorites } from './pages/Favorites';
+import { Home } from './pages/Home';
+
 import { sneakersService } from './services';
 
 function App() {
-    const [
-        openedCart,
-        setOpenedCart
-    ] = useState(false);
-
-    const [
-        items,
-        setItems
-    ] = useState([]);
-
-    const [
-        cartItems,
-        setCartItems
-    ] = useState([]);
-
-    const [
-        favorites,
-        setFavorites
-    ] = useState([]);
-
-    const [
-        searchValue,
-        setSearchValue
-    ] = useState('');
-
-    const [
-        isLoading,
-        setIsLoading
-    ] = useState(true);
+    const [openedCart, setOpenedCart] = useState(false);
+    const [items, setItems] = useState([]);
+    const [cartItems, setCartItems] = useState([]);
+    const [favorites, setFavorites] = useState([]);
+    const [searchValue, setSearchValue] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
 
     const fetchData = async () => {
         try {
@@ -88,13 +65,7 @@ function App() {
         ]);
     };
 
-    const onAddToCart = async (item) => {
-        const {
-            currId,
-            imageUrl,
-            description,
-            price
-        } = item;
+    const onAddToCart = async ({ currId, imageUrl, description, price }) => {
 
         const cartItem = cartItems.find((item) => +item.currId === +currId);
 
@@ -139,32 +110,36 @@ function App() {
     };
 
     return (
-        <AppContext.Provider value={{
+        <AppContext.Provider value={ {
             items,
             cartItems,
             favorites,
             totalPrice
-        }}>
+        } }>
             <div className="wrapper clear">
-                {openedCart
+                { openedCart
                 && <Drawer
-                    onClickRemove={onRemoveFromCart}
-                    cartItems={cartItems}
-                    onClose={() => toggleOpenedCart()}/>
+                    onClickRemove={ onRemoveFromCart }
+                    cartItems={ cartItems }
+                    onClose={ () => toggleOpenedCart() }/>
                 }
-                <Header
-                    onClickCart={() => toggleOpenedCart()}/>
-                <Route path={'/'} exact render={() => <Home searchValue={searchValue}
-                                                            setSearchValue={setSearchValue}
-                                                            searchByValue={searchByValue}
-                                                            onAddToFavorites={onAddToFavorites}
-                                                            onAddToCart={onAddToCart}
-                                                            isLoading={isLoading}/>}/>
-                <Route path={'/favorites'} exact render={() => <Favorites
-                    onAddToFavorites={onAddToFavorites}
-                    onAddToCart={onAddToCart}
-                    cartItems={cartItems}
-                    favorites={favorites}/>}/>
+                <Header onClickCart={ () => toggleOpenedCart() }/>
+                <Route path={ '/' } exact render={ () =>
+                    <Home
+                        searchValue={ searchValue }
+                        setSearchValue={ setSearchValue }
+                        searchByValue={ searchByValue }
+                        onAddToFavorites={ onAddToFavorites }
+                        onAddToCart={ onAddToCart }
+                        isLoading={ isLoading }/> }/>
+                <Route
+                    path={ '/favorites' }
+                    exact
+                    render={ () => <Favorites
+                        onAddToFavorites={ onAddToFavorites }
+                        onAddToCart={ onAddToCart }
+                        cartItems={ cartItems }
+                        favorites={ favorites }/> }/>
             </div>
         </AppContext.Provider>
     );
