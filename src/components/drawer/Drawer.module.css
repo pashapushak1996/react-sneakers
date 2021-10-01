@@ -58,37 +58,6 @@
   margin-bottom: 0;
 }
 
-.cartInfo {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-}
-.cartInfo h3 {
-  margin-bottom: 20px;
-}
-.cartInfo p {
-  margin-bottom: 20px;
-  color: #B5B5B5;
-}
-.cartInfo button img {
-  position: relative;
-  left: -25%;
-}
-.cartInfo button:hover img {
-  transform: translateX(-5px);
-}
-
-.cartInfoImage {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 120px;
-  margin-bottom: 25px;
-}
-
 .cartItems {
   display: flex;
   flex-direction: column;

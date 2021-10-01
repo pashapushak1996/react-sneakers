@@ -2,9 +2,9 @@ import ContentLoader from 'react-content-loader';
 
 export const Loader = () => (
     <ContentLoader
-        speed={2}
-        width={220}
-        height={255}
+        speed={ 2 }
+        width={ 220 }
+        height={ 255 }
         viewBox="0 0 220 255"
         backgroundColor="#f3f3f3"
         foregroundColor="#ecebeb"

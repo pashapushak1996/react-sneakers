@@ -1,9 +1,10 @@
 import { useContext } from 'react';
 
-import AppContext from '../../context';
-import styles from '../drawer/Drawer.module.scss';
+import styles from './CartInfo.module.scss';
 
-export const Info = ({ title, imageUrl, description }) => {
+import AppContext from '../../context';
+
+export const CartInfo = ({ title, imageUrl, description }) => {
     const { setOpenedCart } = useContext(AppContext);
 
     return (

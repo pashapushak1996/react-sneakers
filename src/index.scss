@@ -62,11 +62,11 @@ code {
   font-size: 16px;
   color: #FFFFFF;
   cursor: pointer;
-  transition: background-color 0.1s ease-in-out, transfrorm 0.5s ease-in-out;
+  transition: background-color 0.1s ease-in-out;
 
   img {
     position: relative;
-    left: 25%;
+    left: 18%;
   }
 
   &:hover {
