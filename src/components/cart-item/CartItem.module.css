@@ -15,7 +15,13 @@
   justify-content: center;
   width: 32px;
   height: 32px;
+  border-radius: 10px;
   cursor: pointer;
+  border: none;
+  outline: none;
+}
+.cartItem_button:hover {
+  opacity: 0.9;
 }
 
 .cartItem_img {

@@ -26,6 +26,22 @@
   }
 }
 
+.drawer_button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
 .drawer_priceBlock {
   font-size: 16px;
   margin-bottom: 30px;

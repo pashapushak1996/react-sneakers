@@ -8,24 +8,24 @@ export const Favorites = (props) => {
 
     const {
         onAddToCart,
-        onAddToFavorites,
+        onAddToFavorites
     } = props;
 
     return (
-        <div className='p-40'>
-            <div className='mb-40'>
-                <Title pageTitle={'Мои закладки'}/>
+        <div className="p-40">
+            <div className="mb-40">
+                <Title pageTitle={ 'Мои закладки' }/>
             </div>
             <div className="content">
                 <div className="content_cards">
-                    {favorites
+                    { favorites
                         .map((sneakers) => <Card
-                            key={sneakers.id}
-                            sneakers={sneakers}
-                            cartItems={cartItems}
-                            favorites={favorites}
-                            onClickPlus={() => onAddToCart(sneakers)}
-                            onClickFavorite={() => onAddToFavorites(sneakers)}/>)}
+                            key={ sneakers.id }
+                            sneakers={ sneakers }
+                            cartItems={ cartItems }
+                            favorites={ favorites }
+                            onClickPlus={ () => onAddToCart(sneakers) }
+                            onClickFavorite={ () => onAddToFavorites(sneakers) }/>) }
                 </div>
             </div>
         </div>

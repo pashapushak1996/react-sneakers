@@ -6,7 +6,7 @@ import { Card } from '../card';
 
 
 export const CardList = (props) => {
-    const { items, cartItems, favorites } = useContext(AppContext);
+    const { items, cartItems, favorites, isCartItem, isFavoriteItem } = useContext(AppContext);
 
     const {
         onAddToCart,
@@ -27,8 +27,6 @@ export const CardList = (props) => {
                     onClickPlus={ () => onAddToCart(sneakers) }
                     onClickFavorite={ () => onAddToFavorites(sneakers) }
                     isLoading={ isLoading }
-                    isAdded={ cartItems.some((item) => item.description.includes(sneakers.description)) }
-                    isFavorite={ favorites.some((item) => item.description.includes(sneakers.description)) }
                 />) }
         </div>
     );

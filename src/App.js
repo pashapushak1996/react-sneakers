@@ -94,6 +94,13 @@ function App() {
         setCartItems(cartItems.filter((sneakers) => sneakers.id !== sneakersId));
     };
 
+    const isCartItem = (id) => {
+        return cartItems.some((item) => item.currId === id);
+    };
+    const isFavoriteItem = (id) => {
+        return favorites.some((item) => item.currId === id);
+    };
+
     const searchByValue = (array, value) => {
         const lowerCaseSearchValue = value.toLowerCase();
 
@@ -112,6 +119,8 @@ function App() {
         <AppContext.Provider value={ {
             cartItems,
             favorites,
+            isCartItem,
+            isFavoriteItem,
             items,
             totalPrice
         } }>
@@ -137,7 +146,6 @@ function App() {
                     render={ () => <Favorites
                         onAddToFavorites={ onAddToFavorites }
                         onAddToCart={ onAddToCart }
-                        cartItems={ cartItems }
                         favorites={ favorites }/> }/>
             </div>
         </AppContext.Provider>

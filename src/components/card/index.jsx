@@ -1,14 +1,19 @@
+import { useContext } from 'react';
+
 import styles from './Card.module.scss';
+
+import AppContext from '../../context';
+
 import { Loader } from '../loader';
 
 export const Card = (props) => {
+    const { isCartItem, isFavoriteItem } = useContext(AppContext);
+
     const {
         sneakers,
         onClickPlus,
         onClickFavorite,
-        isLoading,
-        isFavorite,
-        isAdded
+        isLoading
     } = props;
 
     const handleClickFavorite = () => {
@@ -24,7 +29,7 @@ export const Card = (props) => {
             ? <div className={ styles.card }><Loader/></div>
             : <div className={ styles.card }>
                 <button onClick={ handleClickFavorite } className={ styles.card_icon }>
-                    <img src={ isFavorite
+                    <img src={ isFavoriteItem(sneakers.currId)
                         ? '/img/icons/like.svg'
                         : '/img/icons/unlike.svg' } alt=""/>
                 </button>
@@ -37,7 +42,7 @@ export const Card = (props) => {
                     </div>
                     <button onClick={ handleClickPlus }>
                         <img src={
-                            isAdded
+                            isCartItem(sneakers.currId)
                                 ? '/img/icons/success.svg'
                                 : '/img/icons/plus.svg' } alt=""/>
                     </button>
