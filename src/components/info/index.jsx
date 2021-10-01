@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import styles from './CartInfo.module.scss';
+import styles from './Info.module.scss';
 
 import AppContext from '../../context';
 
@@ -8,8 +8,8 @@ export const CartInfo = ({ title, imageUrl, description }) => {
     const { setOpenedCart } = useContext(AppContext);
 
     return (
-        <div className={ styles.cartInfo }>
-            <div className={ styles.cartInfoImage }>
+        <div className={ styles.info }>
+            <div className={ styles.infoImage }>
                 <img src={ imageUrl } alt=""/>
             </div>
             <h3>{ title }</h3>

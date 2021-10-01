@@ -6,7 +6,7 @@ import AppContext from '../../context';
 
 import { sneakersService } from '../../services';
 
-import { CartInfo } from '../cart-info';
+import { CartInfo } from '../info';
 import { CartItem } from '../cart-item';
 
 
