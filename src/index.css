@@ -57,6 +57,10 @@ code {
   position: relative;
   left: 18%;
 }
+.green_button:disabled {
+  animation: button-loading 0.6s ease-in-out infinite;
+  background-color: #bebebe;
+}
 .green_button:hover {
   background-color: #a9da6c;
 }
@@ -65,6 +69,18 @@ code {
 }
 .green_button:active {
   background-color: #91d044;
+}
+
+@keyframes button-loading {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 /*# sourceMappingURL=index.css.map */

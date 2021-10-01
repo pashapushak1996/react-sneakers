@@ -16,23 +16,27 @@ export const Drawer = (props) => {
         onClickRemove
     } = props;
 
-
+    const [isLoading, setIsLoading] = useState(false);
     const [isOrderComplete, setIsOrderComplete] = useState(false);
-
     const [orderNumber, setOrderNumber] = useState(null);
-
     const { totalPrice, setCartItems, cartItems } = useContext(AppContext);
 
     const onSendOrder = async () => {
-        const order = await sneakersService.sendOrder({ items: cartItems });
+        try {
+            setIsLoading(true);
+            const order = await sneakersService.sendOrder({ items: cartItems });
 
-        setOrderNumber(order.id);
-        const cartItemsIds = cartItems.map((item) => item.id);
-        await Promise.all(
-            [...cartItemsIds.map(async (id) => await sneakersService.deleteCartItemById(id))]
-        );
-        setCartItems([]);
-        setIsOrderComplete(true);
+            setOrderNumber(order.id);
+            const cartItemsIds = cartItems.map((item) => item.id);
+            await Promise.all(
+                [...cartItemsIds.map(async (id) => await sneakersService.deleteCartItemById(id))]
+            );
+            setCartItems([]);
+            setIsOrderComplete(true);
+            setIsLoading(false);
+        } catch (e) {
+            console.log(e);
+        }
     };
 
     return (
@@ -72,7 +76,7 @@ export const Drawer = (props) => {
                                     </li>
                                 </ul>
                             </div>
-                            <button onClick={ () => onSendOrder() } className="green_button">
+                            <button disabled={ isLoading } onClick={ () => onSendOrder() } className="green_button">
                                 <span>Оформити замовлення</span>
                                 <img src="/img/icons/arrow-right.svg" alt=""/>
                             </button>
