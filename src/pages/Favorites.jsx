@@ -14,7 +14,7 @@ export const Favorites = (props) => {
     return (
         <div className="p-40">
             <div className="mb-40">
-                <Title pageTitle={ 'Мои закладки' }/>
+                <Title pageTitle={ 'Мої закладки' }/>
             </div>
             <div className="content">
                 <div className="content_cards">

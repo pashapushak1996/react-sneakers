@@ -6,7 +6,7 @@ import { Card } from '../card';
 
 
 export const CardList = (props) => {
-    const { items, cartItems, favorites, isCartItem, isFavoriteItem } = useContext(AppContext);
+    const { items, cartItems, favorites } = useContext(AppContext);
 
     const {
         onAddToCart,

@@ -11,7 +11,7 @@ export const Home = (props) => {
             <div className="d-flex justify-between align-center mb-40">
                 <Title
                     searchValue={ searchValue }
-                    pageTitle={ 'Все кросовки' }/>
+                    pageTitle={ 'Всі кросовки' }/>
                 <Search
                     searchValue={ searchValue }
                     setSearchValue={ setSearchValue }/>

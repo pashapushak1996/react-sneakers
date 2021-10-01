@@ -60,11 +60,11 @@ export const Drawer = (props) => {
                             <div className={ styles.drawer_priceBlock }>
                                 <ul>
                                     <li>
-                                        <span>Итого: </span>
+                                        <span>Разом: </span>
                                         <b>{ totalPrice } грн</b>
                                     </li>
                                     <li>
-                                        <span>Налог 5%: </span>
+                                        <span>Податок 5%: </span>
                                         <b>{ totalPrice * 0.05 }</b>
                                     </li>
                                 </ul>

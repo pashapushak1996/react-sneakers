@@ -15,7 +15,7 @@ export const Header = ({ onClickCart }) => {
                     <img src="/img/header_logo.png" alt=""/>
                     <div>
                         <h3>REACT SNEAKERS</h3>
-                        <p>Магазин лучших кроссовок</p>
+                        <p>Магазин найкращих кросовок</p>
                     </div>
                 </div>
             </NavLink>
