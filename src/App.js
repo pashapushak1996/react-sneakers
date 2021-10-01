@@ -109,10 +109,15 @@ function App() {
             .includes(lowerCaseSearchValue));
     };
 
+
+    useEffect(() => {
+        const body = document.querySelector('body');
+        body.style.overflow = openedCart ? 'hidden' : 'auto';
+    }, [openedCart]);
+
+
     const toggleOpenedCart = () => {
         setOpenedCart((prevState) => !prevState);
-        const [body] = document.getElementsByTagName('body');
-        body.classList.toggle('noScroll', !openedCart);
     };
 
     return (
