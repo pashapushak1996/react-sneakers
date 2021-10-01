@@ -1,37 +1,44 @@
 import { instance } from './axiosConfig';
 
 export const sneakersService = {
-    getAllSneakers: async () => {
-        const { data } = await instance.get('/sneakers');
+    createCartItem: async (obj) => {
+        const { data } = await instance.post('/cart', obj);
 
         return data;
+    },
+    createFavoriteItem: async (obj) => {
+        const { data } = await instance.post('/favorites', obj);
+
+        return data;
+    },
+    deleteCartItemById: async (id) => {
+        await instance.delete(`/cart/${ id }`);
+    },
+
+    deleteFavoriteItem: async (id) => {
+        await instance.delete(`/favorites/${ id }`);
     },
     getAllCartItems: async () => {
         const { data } = await instance.get('/cart');
 
         return data;
     },
+
     getAllFavoriteItems: async () => {
         const { data } = await instance.get('/favorites');
 
         return data;
     },
 
-    createFavoriteItem: async (obj) => {
-        const { data } = await instance.post('/favorites', obj);
-
-        return data;
-    },
-    deleteFavoriteItem: async (id) => {
-        await instance.delete(`/favorites/${id}`);
-    },
-    createCartItem: async (obj) => {
-        const { data } = await instance.post('/cart', obj);
+    getAllSneakers: async () => {
+        const { data } = await instance.get('/sneakers');
 
         return data;
     },
 
-    deleteCartItemById: async (id) => {
-        await instance.delete(`/cart/${id}`);
+    sendOrder: async (orderObj) => {
+        const { data } = await instance.post('/orders', orderObj);
+
+        return data;
     }
 };

@@ -1,36 +1,37 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
 import styles from './Drawer.module.scss';
 
 import AppContext from '../../context';
 
+import { sneakersService } from '../../services';
+
+import { Info } from '../cart-info';
 import { CartItem } from '../cart-item';
 
-const EmptyCart = ({ onClose }) => {
-    return (
-        <div className={ styles.emptyCart }>
-            <div className={ styles.emptyCartImage }>
-                <img src="/img/emptyCart.svg" alt=""/>
-            </div>
-            <h3>Корзина пустая</h3>
-            <p>Добавте хоча б одну парку кросівок, щоб зробити заказ</p>
-            <button onClick={ onClose } className="green_button">
-                <img src="/img/icons/arrow-left.svg" alt=""/>
-                <span>Вернутись назад</span>
-            </button>
-        </div>
-    );
-};
 
 export const Drawer = (props) => {
+    const [isOrderComplete, setIsOrderComplete] = useState(false);
+    const [orderNumber, setOrderNumber] = useState(null);
 
-    const { totalPrice } = useContext(AppContext);
+    const { totalPrice, setCartItems, cartItems } = useContext(AppContext);
 
     const {
-        cartItems,
         onClose,
         onClickRemove
     } = props;
+
+    const onSendOrder = async () => {
+        const order = await sneakersService.sendOrder({ items: cartItems });
+
+        setOrderNumber(order.id);
+        const cartItemsIds = cartItems.map((item) => item.id);
+        await Promise.all(
+            [...cartItemsIds.map(async (id) => await sneakersService.deleteCartItemById(id))]
+        );
+        setCartItems([]);
+        setIsOrderComplete(true);
+    };
 
     return (
         <div className={ styles.overlay }>
@@ -42,7 +43,11 @@ export const Drawer = (props) => {
                     </button>
                 </div>
                 { !cartItems.length
-                    ? <EmptyCart isSuccess={ cartItems.length } onClose={ onClose }/>
+                    ? <Info title={ isOrderComplete ? 'Замовлення оформлено' : 'Корзина пуста' }
+                            description={ isOrderComplete
+                                ? `Замовлення номер ${ orderNumber } скоро буде передано службі доставки`
+                                : 'Виберіть будь-ласка якийсь товар' }
+                            imageUrl={ isOrderComplete ? '/img/sendOrder.svg' : '/img/emptyCart.svg' }/>
                     : <div className={ styles.cartItems }>
                         <div>
                             { cartItems.length ? cartItems.map((sneakers) =>
@@ -64,7 +69,7 @@ export const Drawer = (props) => {
                                     </li>
                                 </ul>
                             </div>
-                            <button className="green_button">
+                            <button onClick={ () => onSendOrder() } className="green_button">
                                 <span>Оформить заказ</span>
                                 <img src="/img/icons/arrow-right.svg" alt=""/>
                             </button>

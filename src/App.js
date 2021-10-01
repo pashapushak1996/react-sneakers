@@ -122,6 +122,8 @@ function App() {
             isCartItem,
             isFavoriteItem,
             items,
+            setCartItems,
+            setOpenedCart,
             totalPrice
         } }>
             <div className="wrapper clear">

@@ -58,29 +58,29 @@
   margin-bottom: 0;
 }
 
-.emptyCart {
+.cartInfo {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
 }
-.emptyCart h3 {
+.cartInfo h3 {
   margin-bottom: 20px;
 }
-.emptyCart p {
+.cartInfo p {
   margin-bottom: 20px;
   color: #B5B5B5;
 }
-.emptyCart button img {
+.cartInfo button img {
   position: relative;
   left: -25%;
 }
-.emptyCart button:hover img {
+.cartInfo button:hover img {
   transform: translateX(-5px);
 }
 
-.emptyCartImage {
+.cartInfoImage {
   display: flex;
   justify-content: center;
   align-items: center;
