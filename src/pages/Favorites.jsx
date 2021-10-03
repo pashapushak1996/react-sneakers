@@ -4,7 +4,7 @@ import { Card, Title } from '../components';
 import AppContext from '../context';
 
 export const Favorites = (props) => {
-    const { cartItems, favorites } = useContext(AppContext);
+    const { state: { favorites } } = useContext(AppContext);
 
     const {
         onAddToCart,
@@ -22,7 +22,6 @@ export const Favorites = (props) => {
                         .map((sneakers) => <Card
                             key={ sneakers.id }
                             sneakers={ sneakers }
-                            cartItems={ cartItems }
                             favorites={ favorites }
                             onClickPlus={ () => onAddToCart(sneakers) }
                             onClickFavorite={ () => onAddToFavorites(sneakers) }/>) }

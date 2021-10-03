@@ -6,7 +6,9 @@ import styles from './Header.module.scss';
 import AppContext from '../../context';
 
 export const Header = ({ onClickCart }) => {
-    const { cartItems, totalPrice } = useContext(AppContext);
+    const { state: { cartItems } } = useContext(AppContext);
+
+    const totalPrice = cartItems.reduce((acc, curr) => acc + curr.price, 0);
 
     return (
         <header className={ styles.header }>

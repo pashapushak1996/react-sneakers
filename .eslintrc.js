@@ -153,7 +153,7 @@ module.exports = {
             }
         ],
         'sort-keys': [
-            'warn',
+            'off',
             'asc',
             {
                 caseSensitive: true,

@@ -2,12 +2,14 @@ import { useContext, useState } from 'react';
 
 import styles from './Drawer.module.scss';
 
+import { cartActionCreators } from '../../actions';
+
 import AppContext from '../../context';
 
 import { sneakersService } from '../../services';
 
-import { CartInfo } from '../info';
 import { CartItem } from '../cart-item';
+import { CartInfo } from '../info';
 
 
 export const Drawer = (props) => {
@@ -19,7 +21,14 @@ export const Drawer = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isOrderComplete, setIsOrderComplete] = useState(false);
     const [orderNumber, setOrderNumber] = useState(null);
-    const { totalPrice, setCartItems, cartItems } = useContext(AppContext);
+
+    const {
+        state:
+            { cartItems },
+        dispatch
+    } = useContext(AppContext);
+
+    const totalPrice = cartItems.reduce((acc, curr) => acc + curr.price, 0);
 
     const onSendOrder = async () => {
         try {
@@ -31,7 +40,7 @@ export const Drawer = (props) => {
             await Promise.all(
                 [...cartItemsIds.map(async (id) => await sneakersService.deleteCartItemById(id))]
             );
-            setCartItems([]);
+            dispatch(cartActionCreators.setCartItems([]));
             setIsOrderComplete(true);
             setIsLoading(false);
         } catch (e) {
@@ -68,11 +77,11 @@ export const Drawer = (props) => {
                                 <ul>
                                     <li>
                                         <span>Разом: </span>
-                                        <b>{ totalPrice } грн</b>
+                                        <b>{ totalPrice / 100 * 95 } грн</b>
                                     </li>
                                     <li>
                                         <span>Податок 5%: </span>
-                                        <b>{ totalPrice * 0.05 }</b>
+                                        <b>{ totalPrice / 100 * 5 }</b>
                                     </li>
                                 </ul>
                             </div>

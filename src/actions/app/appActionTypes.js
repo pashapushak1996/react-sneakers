@@ -1,0 +1,4 @@
+module.exports = {
+    LOADING_FALSE: 'LOADING_FALSE',
+    LOADING_TRUE: 'LOADING_TRUE'
+};

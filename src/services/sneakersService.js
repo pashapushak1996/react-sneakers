@@ -6,11 +6,13 @@ export const sneakersService = {
 
         return data;
     },
+
     createFavoriteItem: async (obj) => {
         const { data } = await instance.post('/favorites', obj);
 
         return data;
     },
+
     deleteCartItemById: async (id) => {
         await instance.delete(`/cart/${ id }`);
     },
@@ -18,6 +20,7 @@ export const sneakersService = {
     deleteFavoriteItem: async (id) => {
         await instance.delete(`/favorites/${ id }`);
     },
+
     getAllCartItems: async () => {
         const { data } = await instance.get('/cart');
 

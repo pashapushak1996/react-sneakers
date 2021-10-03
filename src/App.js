@@ -1,29 +1,42 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { Route } from 'react-router-dom';
 
+import {
+    appActionCreators,
+    cartActionCreators,
+    favoritesActionCreators,
+    itemsActionCreators
+} from './actions';
+
 import { Drawer, Header } from './components';
+
+
 import AppContext from './context';
 import { Favorites } from './pages/Favorites';
 import { Home } from './pages/Home';
 
+import { initialState, reducer } from './reducers';
+
 import { sneakersService } from './services';
 
+
 function App() {
+
+    const [state, dispatch] = useReducer(reducer, initialState);
+
+    const { cartItems, favorites, isLoading } = state;
+
     const [openedCart, setOpenedCart] = useState(false);
-    const [items, setItems] = useState([]);
-    const [cartItems, setCartItems] = useState([]);
-    const [favorites, setFavorites] = useState([]);
     const [searchValue, setSearchValue] = useState('');
-    const [isLoading, setIsLoading] = useState(true);
 
     const fetchData = async () => {
         try {
-            setIsLoading(true);
+            dispatch(appActionCreators.loadingTrue());
 
             const [
-                sneakersArr,
-                cartItemsArr,
-                favoritesArr
+                items,
+                cartItems,
+                favorites
             ] = await Promise.all(
                 [
                     sneakersService.getAllSneakers(),
@@ -32,13 +45,13 @@ function App() {
                 ]
             );
 
-            setItems(sneakersArr);
-            setCartItems(cartItemsArr);
-            setFavorites(favoritesArr);
+            dispatch(itemsActionCreators.setItems(items));
+            dispatch(cartActionCreators.setCartItems(cartItems));
+            dispatch(favoritesActionCreators.setFavoriteItems(favorites));
         } catch (e) {
             console.log(e);
         } finally {
-            setIsLoading(false);
+            dispatch(appActionCreators.loadingFalse());
         }
     };
 
@@ -46,23 +59,23 @@ function App() {
         fetchData();
     }, []);
 
-    const totalPrice = cartItems.reduce((acc, curr) => acc + curr.price, 0);
-
-    const onAddToFavorites = async (obj) => {
-        const favoriteItem = favorites.find((item) => +item.currId === +obj.currId);
+    const onAddToFavorites = async ({ currId, imageUrl, description, price }) => {
+        const favoriteItem = favorites.find((item) => +item.currId === +currId);
 
         if (favoriteItem) {
             await sneakersService.deleteFavoriteItem(favoriteItem.id);
-            setFavorites((prevState) => prevState.filter((product) => product.currId !== obj.currId));
+            dispatch(favoritesActionCreators.deleteFavoriteItem(currId));
             return;
         }
 
-        const createdFavoriteItem = await sneakersService.createFavoriteItem(obj);
+        const createdFavoriteItem = await sneakersService.createFavoriteItem({
+            currId,
+            imageUrl,
+            description,
+            price
+        });
 
-        setFavorites((prevState) => [
-            ...prevState,
-            createdFavoriteItem
-        ]);
+        dispatch(favoritesActionCreators.createFavoriteItem(createdFavoriteItem));
     };
 
     const onAddToCart = async ({ currId, imageUrl, description, price }) => {
@@ -71,7 +84,7 @@ function App() {
 
         if (cartItem) {
             await sneakersService.deleteCartItemById(cartItem.id);
-            setCartItems((prevState) => prevState.filter((product) => product.currId !== currId));
+            dispatch(cartActionCreators.deleteCartItem(currId));
             return;
         }
 
@@ -82,16 +95,13 @@ function App() {
             price
         });
 
-        setCartItems((prevState) => [
-            ...prevState,
-            createdCartItem
-        ]);
+        dispatch(cartActionCreators.createCartItem(createdCartItem));
     };
 
-    const onRemoveFromCart = async (sneakersId) => {
-        await sneakersService.deleteCartItemById(sneakersId);
+    const onRemoveFromCart = async ({ currId, id }) => {
+        await sneakersService.deleteCartItemById(id);
 
-        setCartItems(cartItems.filter((sneakers) => sneakers.id !== sneakersId));
+        dispatch(cartActionCreators.deleteCartItem(currId));
     };
 
     const isCartItem = (id) => {
@@ -122,20 +132,16 @@ function App() {
 
     return (
         <AppContext.Provider value={ {
-            cartItems,
-            favorites,
+            dispatch,
             isCartItem,
             isFavoriteItem,
-            items,
-            setCartItems,
             setOpenedCart,
-            totalPrice
+            state
         } }>
             <div className="wrapper clear">
                 { openedCart
                 && <Drawer
                     onClickRemove={ onRemoveFromCart }
-                    cartItems={ cartItems }
                     onClose={ () => toggleOpenedCart() }/>
                 }
                 <Header onClickCart={ () => toggleOpenedCart() }/>
@@ -152,8 +158,7 @@ function App() {
                     exact
                     render={ () => <Favorites
                         onAddToFavorites={ onAddToFavorites }
-                        onAddToCart={ onAddToCart }
-                        favorites={ favorites }/> }/>
+                        onAddToCart={ onAddToCart }/> }/>
             </div>
         </AppContext.Provider>
     );
