@@ -21,6 +21,7 @@ export const Orders = () => {
     const [orderNumber, setOrderNumber] = useState(0);
 
     const orderItems = orders.length > 0 && orders[orderNumber].items;
+    const orderId = orders.length > 0 && orders[orderNumber].id;
 
     const nextOrder = () => {
         if (orderNumber >= orders.length) {
@@ -61,6 +62,7 @@ export const Orders = () => {
             <div className="mb-40">
                 <Title pageTitle={ 'Мої покупки' }/>
             </div>
+            <div>Заказ №{ orderId }</div>
             <button disabled={ orderNumber === 0 } onClick={ prevOrder }>Prev order</button>
             <button disabled={ orderNumber >= orders.length - 1 } onClick={ nextOrder }>Next order</button>
             <div className="content">
