@@ -22,7 +22,6 @@ export const Favorites = (props) => {
                         .map((sneakers) => <Card
                             key={ sneakers.id }
                             sneakers={ sneakers }
-                            favorites={ favorites }
                             onClickPlus={ () => onAddToCart(sneakers) }
                             onClickFavorite={ () => onAddToFavorites(sneakers) }/>) }
                 </div>

@@ -16,8 +16,9 @@ import { Home } from './pages/Home';
 
 import { initialState, reducer } from './reducers';
 
-import { FAVORITES, SNEAKERS } from './routes';
+import { FAVORITES, ORDERS, SNEAKERS } from './routes';
 import { sneakersService } from './services';
+import { Orders } from "./pages/Orders";
 
 
 function App() {
@@ -157,6 +158,11 @@ function App() {
                         <Favorites
                             onAddToFavorites={ onAddToFavorites }
                             onAddToCart={ onAddToCart }/> }/>
+                <Route
+                    path={ ORDERS }
+                    exact
+                    render={ () =>
+                        <Orders/> }/>
 
                 <Redirect from={ '/' } to={ SNEAKERS }/>
             </div>

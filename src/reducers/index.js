@@ -7,7 +7,8 @@ import {
     LOADING_TRUE,
     SET_CART_ITEMS,
     SET_FAVORITES,
-    SET_ITEMS
+    SET_ITEMS,
+    SET_ORDERS
 } from '../actions';
 
 
@@ -15,13 +16,17 @@ export const initialState = {
     cartItems: [],
     favorites: [],
     isLoading: false,
-    items: []
+    items: [],
+    orders: []
 };
 
 export const reducer = (state, action) => {
     switch (action.type) {
         case SET_ITEMS:
             return { ...state, items: action.payload };
+
+        case SET_ORDERS:
+            return { ...state, orders: action.payload };
 
         case SET_FAVORITES:
             return { ...state, favorites: action.payload };

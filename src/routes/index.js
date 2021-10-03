@@ -1,4 +1,5 @@
 module.exports = {
     SNEAKERS: '/sneakers',
-    FAVORITES: '/favorites'
+    FAVORITES: '/favorites',
+    ORDERS: '/orders'
 };
