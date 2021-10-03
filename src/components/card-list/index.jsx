@@ -6,14 +6,13 @@ import { Card } from '../card';
 
 
 export const CardList = (props) => {
-    const { state: { items } } = useContext(AppContext);
+    const { state: { items }, isLoading } = useContext(AppContext);
 
     const {
         onAddToCart,
         onAddToFavorites,
         searchByValue,
-        searchValue,
-        isLoading
+        searchValue
     } = props;
 
     return (

@@ -149,8 +149,7 @@ function App() {
                             setSearchValue={ setSearchValue }
                             searchByValue={ searchByValue }
                             onAddToFavorites={ onAddToFavorites }
-                            onAddToCart={ onAddToCart }
-                            isLoading={ isLoading }/> }/>
+                            onAddToCart={ onAddToCart }/> }/>
                 <Route
                     path={ FAVORITES }
                     exact
