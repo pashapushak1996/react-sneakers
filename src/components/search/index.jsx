@@ -3,12 +3,16 @@ import styles from './Search.module.scss';
 export const Search = (props) => {
     const { setSearchValue, searchValue } = props;
 
+    const onChange = ({ target }) => {
+        setSearchValue(target.value);
+    };
+
     return (
         <div className={ styles.search }>
             <img src="/img/icons/search.svg" alt=""/>
             <input
                 value={ searchValue }
-                onChange={ ({ target }) => setSearchValue(target.value) }
+                onChange={ onChange }
                 type="text"
                 placeholder="Поиск..."/>
             { searchValue && <button onClick={ () => setSearchValue('') } className={ styles.search_btn }>

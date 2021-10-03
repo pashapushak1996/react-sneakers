@@ -59,45 +59,35 @@ function App() {
         fetchData();
     }, []);
 
-    const onAddToFavorites = async ({ currId, imageUrl, description, price }) => {
-        const favoriteItem = favorites.find((item) => +item.currId === +currId);
+    const onAddToFavorites = async (obj) => {
+        const favoriteItem = favorites.find((item) => +item.currId === obj.currId);
 
         if (favoriteItem) {
             await sneakersService.deleteFavoriteItem(favoriteItem.id);
 
-            dispatch(favoritesActionCreators.deleteFavoriteItem(currId));
+            dispatch(favoritesActionCreators.deleteFavoriteItem(obj.currId));
 
             return;
         }
 
-        const createdFavoriteItem = await sneakersService.createFavoriteItem({
-            currId,
-            imageUrl,
-            description,
-            price
-        });
+        const createdFavoriteItem = await sneakersService.createFavoriteItem(obj);
 
         dispatch(favoritesActionCreators.createFavoriteItem(createdFavoriteItem));
     };
 
-    const onAddToCart = async ({ currId, imageUrl, description, price }) => {
+    const onAddToCart = async (obj) => {
 
-        const cartItem = cartItems.find((item) => +item.currId === +currId);
+        const cartItem = cartItems.find((item) => +item.currId === obj.currId);
 
         if (cartItem) {
             await sneakersService.deleteCartItemById(cartItem.id);
 
-            dispatch(cartActionCreators.deleteCartItem(currId));
+            dispatch(cartActionCreators.deleteCartItem(obj.currId));
 
             return;
         }
 
-        const createdCartItem = await sneakersService.createCartItem({
-            currId,
-            description,
-            imageUrl,
-            price
-        });
+        const createdCartItem = await sneakersService.createCartItem(obj);
 
         dispatch(cartActionCreators.createCartItem(createdCartItem));
     };

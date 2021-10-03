@@ -6,7 +6,7 @@ import { cartActionCreators } from '../../actions';
 
 import AppContext from '../../context';
 
-import { sneakersService } from '../../services';
+import { ordersService, sneakersService } from '../../services';
 
 import { CartItem } from '../cart-item';
 import { CartInfo } from '../info';
@@ -33,14 +33,18 @@ export const Drawer = (props) => {
     const onSendOrder = async () => {
         try {
             setIsLoading(true);
-            const order = await sneakersService.sendOrder({ items: cartItems });
+            const order = await ordersService.createOrder({ items: cartItems });
 
             setOrderNumber(order.id);
+            
             const cartItemsIds = cartItems.map((item) => item.id);
+
             await Promise.all(
                 [...cartItemsIds.map(async (id) => await sneakersService.deleteCartItemById(id))]
             );
+
             dispatch(cartActionCreators.setCartItems([]));
+            
             setIsOrderComplete(true);
             setIsLoading(false);
         } catch (e) {

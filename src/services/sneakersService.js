@@ -37,11 +37,5 @@ export const sneakersService = {
         const { data } = await instance.get('/sneakers');
 
         return data;
-    },
-
-    sendOrder: async (orderObj) => {
-        const { data } = await instance.post('/orders', orderObj);
-
-        return data;
     }
 };
