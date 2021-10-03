@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useState } from 'react';
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import {
     appActionCreators,
@@ -13,50 +13,50 @@ import AppContext from './context';
 
 import { Favorites } from './pages/Favorites';
 import { Home } from './pages/Home';
+import { Orders } from './pages/Orders';
 
 import { initialState, reducer } from './reducers';
 
 import { FAVORITES, ORDERS, SNEAKERS } from './routes';
 import { sneakersService } from './services';
-import { Orders } from "./pages/Orders";
 
 
 function App() {
 
     const [state, dispatch] = useReducer(reducer, initialState);
 
-    const { cartItems, favorites, isLoading } = state;
+    const { cartItems, favorites } = state;
 
     const [openedCart, setOpenedCart] = useState(false);
     const [searchValue, setSearchValue] = useState('');
 
-    const fetchData = async () => {
-        try {
-            dispatch(appActionCreators.loadingTrue());
-
-            const [
-                items,
-                cartItems,
-                favorites
-            ] = await Promise.all(
-                [
-                    sneakersService.getAllSneakers(),
-                    sneakersService.getAllCartItems(),
-                    sneakersService.getAllFavoriteItems()
-                ]
-            );
-
-            dispatch(itemsActionCreators.setItems(items));
-            dispatch(cartActionCreators.setCartItems(cartItems));
-            dispatch(favoritesActionCreators.setFavoriteItems(favorites));
-        } catch (e) {
-            console.log(e);
-        } finally {
-            dispatch(appActionCreators.loadingFalse());
-        }
-    };
-
     useEffect(() => {
+        const fetchData = async () => {
+            try {
+                dispatch(appActionCreators.loadingTrue());
+
+                const [
+                    items,
+                    cartItems,
+                    favorites
+                ] = await Promise.all(
+                    [
+                        sneakersService.getAllSneakers(),
+                        sneakersService.getAllCartItems(),
+                        sneakersService.getAllFavoriteItems()
+                    ]
+                );
+
+                dispatch(itemsActionCreators.setItems(items));
+                dispatch(cartActionCreators.setCartItems(cartItems));
+                dispatch(favoritesActionCreators.setFavoriteItems(favorites));
+            } catch (e) {
+                console.log(e);
+            } finally {
+                dispatch(appActionCreators.loadingFalse());
+            }
+        };
+
         fetchData();
     }, []);
 
@@ -139,31 +139,32 @@ function App() {
                     onClose={ () => toggleOpenedCart() }/>
                 }
                 <Header onClickCart={ () => toggleOpenedCart() }/>
+                <Switch>
+                    <Route
+                        path={ SNEAKERS }
+                        exact
+                        render={ () =>
+                            <Home
+                                searchValue={ searchValue }
+                                setSearchValue={ setSearchValue }
+                                searchByValue={ searchByValue }
+                                onAddToFavorites={ onAddToFavorites }
+                                onAddToCart={ onAddToCart }/> }/>
+                    <Route
+                        path={ FAVORITES }
+                        exact
+                        render={ () =>
+                            <Favorites
+                                onAddToFavorites={ onAddToFavorites }
+                                onAddToCart={ onAddToCart }/> }/>
+                    <Route
+                        path={ ORDERS }
+                        exact
+                        render={ () =>
+                            <Orders/> }/>
 
-                <Route
-                    path={ SNEAKERS }
-                    exact
-                    render={ () =>
-                        <Home
-                            searchValue={ searchValue }
-                            setSearchValue={ setSearchValue }
-                            searchByValue={ searchByValue }
-                            onAddToFavorites={ onAddToFavorites }
-                            onAddToCart={ onAddToCart }/> }/>
-                <Route
-                    path={ FAVORITES }
-                    exact
-                    render={ () =>
-                        <Favorites
-                            onAddToFavorites={ onAddToFavorites }
-                            onAddToCart={ onAddToCart }/> }/>
-                <Route
-                    path={ ORDERS }
-                    exact
-                    render={ () =>
-                        <Orders/> }/>
-
-                <Redirect from={ '/' } to={ SNEAKERS }/>
+                    <Redirect from={ '/' } to={ SNEAKERS }/>
+                </Switch>
             </div>
         </AppContext.Provider>
     );
