@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useState } from 'react';
-import { Route } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 
 import {
     appActionCreators,
@@ -7,16 +7,16 @@ import {
     favoritesActionCreators,
     itemsActionCreators
 } from './actions';
-
 import { Drawer, Header } from './components';
 
-
 import AppContext from './context';
+
 import { Favorites } from './pages/Favorites';
 import { Home } from './pages/Home';
 
 import { initialState, reducer } from './reducers';
 
+import { FAVORITES, SNEAKERS } from './routes';
 import { sneakersService } from './services';
 
 
@@ -64,7 +64,9 @@ function App() {
 
         if (favoriteItem) {
             await sneakersService.deleteFavoriteItem(favoriteItem.id);
+
             dispatch(favoritesActionCreators.deleteFavoriteItem(currId));
+
             return;
         }
 
@@ -84,7 +86,9 @@ function App() {
 
         if (cartItem) {
             await sneakersService.deleteCartItemById(cartItem.id);
+
             dispatch(cartActionCreators.deleteCartItem(currId));
+
             return;
         }
 
@@ -104,12 +108,9 @@ function App() {
         dispatch(cartActionCreators.deleteCartItem(currId));
     };
 
-    const isCartItem = (id) => {
-        return cartItems.some((item) => item.currId === id);
-    };
-    const isFavoriteItem = (id) => {
-        return favorites.some((item) => item.currId === id);
-    };
+    const isCartItem = (id) => cartItems.some((item) => item.currId === id);
+
+    const isFavoriteItem = (id) => favorites.some((item) => item.currId === id);
 
     const searchByValue = (array, value) => {
         const lowerCaseSearchValue = value.toLowerCase();
@@ -122,7 +123,9 @@ function App() {
 
     useEffect(() => {
         const body = document.querySelector('body');
+
         body.style.overflow = openedCart ? 'hidden' : 'auto';
+
     }, [openedCart]);
 
 
@@ -145,20 +148,27 @@ function App() {
                     onClose={ () => toggleOpenedCart() }/>
                 }
                 <Header onClickCart={ () => toggleOpenedCart() }/>
-                <Route path={ '/' } exact render={ () =>
-                    <Home
-                        searchValue={ searchValue }
-                        setSearchValue={ setSearchValue }
-                        searchByValue={ searchByValue }
-                        onAddToFavorites={ onAddToFavorites }
-                        onAddToCart={ onAddToCart }
-                        isLoading={ isLoading }/> }/>
+
                 <Route
-                    path={ '/favorites' }
+                    path={ SNEAKERS }
                     exact
-                    render={ () => <Favorites
-                        onAddToFavorites={ onAddToFavorites }
-                        onAddToCart={ onAddToCart }/> }/>
+                    render={ () =>
+                        <Home
+                            searchValue={ searchValue }
+                            setSearchValue={ setSearchValue }
+                            searchByValue={ searchByValue }
+                            onAddToFavorites={ onAddToFavorites }
+                            onAddToCart={ onAddToCart }
+                            isLoading={ isLoading }/> }/>
+                <Route
+                    path={ FAVORITES }
+                    exact
+                    render={ () =>
+                        <Favorites
+                            onAddToFavorites={ onAddToFavorites }
+                            onAddToCart={ onAddToCart }/> }/>
+
+                <Redirect from={ '/' } to={ SNEAKERS }/>
             </div>
         </AppContext.Provider>
     );

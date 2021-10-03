@@ -5,6 +5,8 @@ import styles from './Header.module.scss';
 
 import AppContext from '../../context';
 
+import { SNEAKERS } from '../../routes';
+
 export const Header = ({ onClickCart }) => {
     const { state: { cartItems } } = useContext(AppContext);
 
@@ -12,7 +14,7 @@ export const Header = ({ onClickCart }) => {
 
     return (
         <header className={ styles.header }>
-            <NavLink to={ '/' }>
+            <NavLink to={ SNEAKERS }>
                 <div className={ styles.header_info }>
                     <img src="/img/header_logo.png" alt=""/>
                     <div>

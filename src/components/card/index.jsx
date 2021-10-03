@@ -8,7 +8,7 @@ import { Loader } from '../loader';
 
 export const Card = (props) => {
     const { isCartItem, isFavoriteItem } = useContext(AppContext);
-
+    console.log(props);
     const {
         sneakers,
         onClickPlus,
