@@ -25,7 +25,7 @@ function App() {
 
     const [state, dispatch] = useReducer(reducer, initialState);
 
-    const { cartItems, favorites } = state;
+    const { cartItems, favorites, items } = state;
 
     const [openedCart, setOpenedCart] = useState(false);
     const [searchValue, setSearchValue] = useState('');
@@ -51,7 +51,8 @@ function App() {
                 dispatch(cartActionCreators.setCartItems(cartItems));
                 dispatch(favoritesActionCreators.setFavoriteItems(favorites));
             } catch (e) {
-                console.log(e);
+                alert('Помилка загрузки данних');
+                console.error(e);
             } finally {
                 dispatch(appActionCreators.loadingFalse());
             }
@@ -61,42 +62,57 @@ function App() {
     }, []);
 
     const onAddToFavorites = async (obj) => {
-        const favoriteItem = favorites.find((item) => +item.currId === obj.currId);
+        try {
+            const favoriteItem = favorites.find((item) => +item.currId === obj.id);
 
-        if (favoriteItem) {
-            await sneakersService.deleteFavoriteItem(favoriteItem.id);
+            if (favoriteItem) {
+                await sneakersService.deleteFavoriteItem(favoriteItem.id);
 
-            dispatch(favoritesActionCreators.deleteFavoriteItem(obj.currId));
+                dispatch(favoritesActionCreators.deleteFavoriteItem(obj.currId));
 
-            return;
+                return;
+            }
+
+            const createdFavoriteItem = await sneakersService.createFavoriteItem(obj);
+
+            dispatch(favoritesActionCreators.createFavoriteItem(createdFavoriteItem));
+        } catch (e) {
+            alert('Товар не додано в улюблені ;(');
+            console.error(e);
         }
-
-        const createdFavoriteItem = await sneakersService.createFavoriteItem(obj);
-
-        dispatch(favoritesActionCreators.createFavoriteItem(createdFavoriteItem));
     };
 
     const onAddToCart = async (obj) => {
+        try {
+            const cartItem = cartItems.find((item) => Number(item.currId) === Number(obj.id));
 
-        const cartItem = cartItems.find((item) => +item.currId === obj.currId);
+            if (cartItem) {
+                await sneakersService.deleteCartItemById(cartItem.id);
 
-        if (cartItem) {
-            await sneakersService.deleteCartItemById(cartItem.id);
+                dispatch(cartActionCreators.deleteCartItem(obj.currId));
 
-            dispatch(cartActionCreators.deleteCartItem(obj.currId));
+                return;
+            }
 
-            return;
+            const createdCartItem = await sneakersService.createCartItem(obj);
+
+            dispatch(cartActionCreators.createCartItem(createdCartItem));
+        } catch (e) {
+            alert('Товар не додано в корзину ;(');
+            console.error(e);
         }
-
-        const createdCartItem = await sneakersService.createCartItem(obj);
-
-        dispatch(cartActionCreators.createCartItem(createdCartItem));
     };
 
     const onRemoveFromCart = async ({ currId, id }) => {
-        await sneakersService.deleteCartItemById(id);
+        try {
+            await sneakersService.deleteCartItemById(id);
 
-        dispatch(cartActionCreators.deleteCartItem(currId));
+            dispatch(cartActionCreators.deleteCartItem(currId));
+        } catch (e) {
+            alert('Помилка видалення товару');
+            console.error(e);
+        }
+
     };
 
     const isCartItem = (id) => cartItems.some((item) => item.currId === id);
@@ -144,6 +160,7 @@ function App() {
                         exact
                         render={ () =>
                             <Home
+                                items={ items }
                                 searchValue={ searchValue }
                                 setSearchValue={ setSearchValue }
                                 searchByValue={ searchByValue }

@@ -3,21 +3,27 @@ import { useContext } from 'react';
 import AppContext from '../../context';
 
 import { Card } from '../card';
+import { Loader } from '../loader';
 
 
 export const CardList = (props) => {
-    const { state: { items }, isLoading } = useContext(AppContext);
+    const { state: { isLoading } } = useContext(AppContext);
 
     const {
         onAddToCart,
         onAddToFavorites,
         searchByValue,
-        searchValue
+        searchValue,
+        items
     } = props;
+
+    if (isLoading) {
+        return <Loader/>;
+    }
 
     return (
         <div className="content_cards">
-            { (isLoading ? [...Array(8)] : searchByValue(items, searchValue))
+            { (searchValue ? searchByValue(items, searchValue) : items)
                 .map((sneakers, index) => <Card
                     key={ index }
                     sneakers={ sneakers }

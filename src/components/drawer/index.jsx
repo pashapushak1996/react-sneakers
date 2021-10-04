@@ -65,9 +65,11 @@ export const Drawer = (props) => {
                 { !cartItems.length ?
                     <CartInfo
                         title={ isOrderComplete ? 'Замовлення оформлено' : 'Корзина пуста' }
-                        description={ isOrderComplete
-                            ? `Замовлення номер ${ orderNumber } скоро буде передано службі доставки`
-                            : 'Виберіть будь-ласка якийсь товар' }
+                        description={
+                            isOrderComplete
+                                ? `Замовлення номер ${ orderNumber } скоро буде передано службі доставки`
+                                : 'Виберіть будь-ласка якийсь товар'
+                        }
                         imageUrl={ isOrderComplete ? '/img/sendOrder.svg' : '/img/emptyCart.svg' }/>
                     : <div className={ styles.cartItems }>
                         <div>
@@ -96,7 +98,6 @@ export const Drawer = (props) => {
                             </button>
                         </div>
                     </div> }
-
             </div>
         </div>
     );

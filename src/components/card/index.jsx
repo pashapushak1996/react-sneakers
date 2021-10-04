@@ -14,7 +14,6 @@ export const Card = (props) => {
         onClickPlus,
         onClickFavorite,
         isLoading,
-        isOrderItem
     } = props;
 
     const handleClickFavorite = () => {
@@ -27,10 +26,10 @@ export const Card = (props) => {
 
     return (
         isLoading
-            ? <div className={ styles.card }><Loader/></div>
+            ? <Loader/>
             : <div className={ styles.card }>
                 {
-                    !isOrderItem && <button onClick={ handleClickFavorite } className={ styles.card_icon }>
+                    onClickPlus && <button onClick={ handleClickFavorite } className={ styles.card_icon }>
                         <img src={ isFavoriteItem(sneakers.currId)
                             ? '/img/icons/like.svg'
                             : '/img/icons/unlike.svg' } alt=""/>
@@ -43,7 +42,7 @@ export const Card = (props) => {
                         <span>Цена:</span>
                         <p>{ sneakers.price }</p>
                     </div>
-                    { !isOrderItem && <button onClick={ handleClickPlus }>
+                    { onClickFavorite && <button onClick={ handleClickPlus }>
                         <img src={
                             isCartItem(sneakers.currId)
                                 ? '/img/icons/success.svg'

@@ -8,12 +8,6 @@ import AppContext from '../context';
 
 import { ordersService } from '../services';
 
-const Order = ({ order }) => {
-    return (<div>
-
-    </div>);
-};
-
 export const Orders = () => {
 
     const { state: { orders }, dispatch } = useContext(AppContext);
@@ -49,7 +43,8 @@ export const Orders = () => {
 
             dispatch(appActionCreators.loadingFalse());
         } catch (e) {
-            console.log(e);
+            alert('Помилка загрузки данних');
+            console.error(e);
         }
     };
 
@@ -68,7 +63,7 @@ export const Orders = () => {
             <div className="content">
                 <div className="content_cards">
                     { orderItems && orderItems
-                        .map((item) => <Card isOrderItem key={ item.id } sneakers={ item }/>) }
+                        .map((item) => <Card key={ item.id } sneakers={ item }/>) }
                 </div>
             </div>
         </div>

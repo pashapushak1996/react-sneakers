@@ -1,15 +1,10 @@
 import { useContext } from 'react';
 
-import { Card, Title } from '../components';
+import { CardList, Title } from '../components';
 import AppContext from '../context';
 
 export const Favorites = (props) => {
     const { state: { favorites } } = useContext(AppContext);
-
-    const {
-        onAddToCart,
-        onAddToFavorites
-    } = props;
 
     return (
         <div className="p-40">
@@ -18,12 +13,7 @@ export const Favorites = (props) => {
             </div>
             <div className="content">
                 <div className="content_cards">
-                    { favorites
-                        .map((sneakers) => <Card
-                            key={ sneakers.id }
-                            sneakers={ sneakers }
-                            onClickPlus={ () => onAddToCart(sneakers) }
-                            onClickFavorite={ () => onAddToFavorites(sneakers) }/>) }
+                    <CardList items={ favorites } { ...props }/>
                 </div>
             </div>
         </div>
