@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 
 import { appActionCreators, ordersActionCreators } from '../actions';
 
-import { Card, Title } from '../components';
+import { Card, CartInfo, Title } from '../components';
 
 import AppContext from '../context';
 
@@ -33,24 +33,32 @@ export const Orders = () => {
         setOrderNumber(prevState => prevState - 1);
     };
 
-    const fetchData = async () => {
-        try {
-            dispatch(appActionCreators.loadingTrue());
-
-            const orders = await ordersService.getAllOrders();
-
-            dispatch(ordersActionCreators.setOrders(orders));
-
-            dispatch(appActionCreators.loadingFalse());
-        } catch (e) {
-            alert('Помилка загрузки данних');
-            console.error(e);
-        }
-    };
 
     useEffect(() => {
+        const fetchData = async () => {
+            try {
+                dispatch(appActionCreators.loadingTrue());
+
+                const orders = await ordersService.getAllOrders();
+
+                dispatch(ordersActionCreators.setOrders(orders));
+
+                dispatch(appActionCreators.loadingFalse());
+            } catch (e) {
+                alert('Помилка загрузки данних');
+                console.error(e);
+            }
+        };
+
         fetchData();
     }, []);
+
+    if (!orderId) {
+        return <CartInfo
+            title={ 'У вас немає замовлень' }
+            description={ 'Зробіть хоча б одне замовлення!' }
+            imageUrl={ '/img/noneOrders.png' }/>;
+    }
 
     return (
         <div className="p-40">
@@ -58,8 +66,8 @@ export const Orders = () => {
                 <Title pageTitle={ 'Мої покупки' }/>
             </div>
             <div>Заказ №{ orderId }</div>
-            <button disabled={ orderNumber === 0 } onClick={ prevOrder }>Prev order</button>
-            <button disabled={ orderNumber >= orders.length - 1 } onClick={ nextOrder }>Next order</button>
+            <button disabled={ orderNumber === 0 } onClick={ prevOrder }>Попереднє замовлення</button>
+            <button disabled={ orderNumber >= orders.length - 1 } onClick={ nextOrder }>Наступне замовлення</button>
             <div className="content">
                 <div className="content_cards">
                     { orderItems && orderItems
