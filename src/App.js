@@ -133,11 +133,10 @@ function App() {
             state
         } }>
             <div className="wrapper clear">
-                { openedCart
-                && <Drawer
+                <Drawer
+                    openedCart={ openedCart }
                     onClickRemove={ onRemoveFromCart }
                     onClose={ () => toggleOpenedCart() }/>
-                }
                 <Header onClickCart={ () => toggleOpenedCart() }/>
                 <Switch>
                     <Route

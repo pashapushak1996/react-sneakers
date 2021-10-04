@@ -14,6 +14,7 @@ import { CartInfo } from '../info';
 
 export const Drawer = (props) => {
     const {
+        openedCart,
         onClose,
         onClickRemove
     } = props;
@@ -36,7 +37,7 @@ export const Drawer = (props) => {
             const order = await ordersService.createOrder({ items: cartItems });
 
             setOrderNumber(order.id);
-            
+
             const cartItemsIds = cartItems.map((item) => item.id);
 
             await Promise.all(
@@ -44,7 +45,7 @@ export const Drawer = (props) => {
             );
 
             dispatch(cartActionCreators.setCartItems([]));
-            
+
             setIsOrderComplete(true);
             setIsLoading(false);
         } catch (e) {
@@ -53,7 +54,7 @@ export const Drawer = (props) => {
     };
 
     return (
-        <div className={ styles.overlay }>
+        <div className={ `${ styles.overlay } ${ openedCart ? styles.overlayVisible : '' }` }>
             <div className={ styles.drawer }>
                 <div className="d-flex justify-between">
                     <h2>Корзина</h2>
