@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 
 import { appActionCreators, ordersActionCreators } from '../actions';
 
-import { Card, CartInfo, Title } from '../components';
+import { Card, Info, Loader, Title } from '../components';
 
 import AppContext from '../context';
 
@@ -10,7 +10,7 @@ import { ordersService } from '../services';
 
 export const Orders = () => {
 
-    const { state: { orders }, dispatch } = useContext(AppContext);
+    const { state: { orders, isLoading }, dispatch } = useContext(AppContext);
 
     const [orderNumber, setOrderNumber] = useState(0);
 
@@ -53,8 +53,12 @@ export const Orders = () => {
         fetchData();
     }, []);
 
+    if (isLoading) {
+        return <Loader/>;
+    }
+
     if (!orderId) {
-        return <CartInfo
+        return <Info
             title={ 'У вас немає замовлень' }
             description={ 'Зробіть хоча б одне замовлення!' }
             imageUrl={ '/img/noneOrders.png' }/>;
@@ -65,9 +69,11 @@ export const Orders = () => {
             <div className="mb-40">
                 <Title pageTitle={ 'Мої покупки' }/>
             </div>
-            <div>Заказ №{ orderId }</div>
-            <button disabled={ orderNumber === 0 } onClick={ prevOrder }>Попереднє замовлення</button>
-            <button disabled={ orderNumber >= orders.length - 1 } onClick={ nextOrder }>Наступне замовлення</button>
+            <div className={ 'text-center mt-20 mb-20 ' }>Замовлення №{ orderId }</div>
+            <div className={ 'd-flex justify-between mb-20 align-center ordersButtons' }>
+                <button disabled={ orderNumber === 0 } onClick={ prevOrder }>Попереднє замовлення</button>
+                <button disabled={ orderNumber >= orders.length - 1 } onClick={ nextOrder }>Наступне замовлення</button>
+            </div>
             <div className="content">
                 <div className="content_cards">
                     { orderItems && orderItems

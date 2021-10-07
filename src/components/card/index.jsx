@@ -13,7 +13,7 @@ export const Card = (props) => {
         sneakers,
         onClickPlus,
         onClickFavorite,
-        isLoading,
+        isLoading
     } = props;
 
     const handleClickFavorite = () => {

@@ -63,8 +63,7 @@ function App() {
 
     const onAddToFavorites = async (obj) => {
         try {
-            const favoriteItem = favorites.find((item) => +item.currId === obj.id);
-
+            const favoriteItem = favorites.find((item) => item.currId === obj.currId);
             if (favoriteItem) {
                 await sneakersService.deleteFavoriteItem(favoriteItem.id);
 

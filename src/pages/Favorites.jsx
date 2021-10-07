@@ -1,10 +1,21 @@
 import { useContext } from 'react';
 
-import { CardList, Title } from '../components';
+import { CardList, Info, Loader, Title } from '../components';
 import AppContext from '../context';
 
 export const Favorites = (props) => {
-    const { state: { favorites } } = useContext(AppContext);
+    const { state: { favorites, isLoading } } = useContext(AppContext);
+
+    if (isLoading) {
+        return <Loader/>;
+    }
+
+    if (!favorites.length) {
+        return <Info
+            imageUrl={ '/img/noneFavorites.png' }
+            description={ 'Ви нічого не додавали в улюблені.' }
+            title={ 'Улюблених немає ;(' }/>;
+    }
 
     return (
         <div className="p-40">

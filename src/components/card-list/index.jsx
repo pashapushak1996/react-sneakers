@@ -24,8 +24,8 @@ export const CardList = (props) => {
     return (
         <div className="content_cards">
             { (searchValue ? searchByValue(items, searchValue) : items)
-                .map((sneakers, index) => <Card
-                    key={ index }
+                .map((sneakers) => <Card
+                    key={ sneakers.id }
                     sneakers={ sneakers }
                     onClickPlus={ () => onAddToCart(sneakers) }
                     onClickFavorite={ () => onAddToFavorites(sneakers) }

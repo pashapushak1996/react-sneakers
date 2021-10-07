@@ -30,6 +30,7 @@ code {
   margin: 50px auto;
 }
 
+
 //Content styles
 
 .content {
@@ -44,6 +45,29 @@ code {
   column-gap: 40px;
   row-gap: 20px;
   flex-wrap: wrap;
+}
+
+//Order buttons group
+.ordersButtons {
+  button {
+    padding: 10px 15px;
+    background-color: #9DD558;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    color: whitesmoke;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.1s ease-out;
+
+    &:disabled {
+      background-color: #bebebe;
+    }
+
+    &:hover {
+      transform: scale(1.01, 1.01);
+    }
+  }
 }
 
 

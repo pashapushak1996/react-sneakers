@@ -9,7 +9,7 @@ import AppContext from '../../context';
 import { ordersService, sneakersService } from '../../services';
 
 import { CartItem } from '../cart-item';
-import { CartInfo } from '../info';
+import { Info } from '../info';
 
 
 export const Drawer = (props) => {
@@ -63,7 +63,8 @@ export const Drawer = (props) => {
                     </button>
                 </div>
                 { !cartItems.length ?
-                    <CartInfo
+                    <Info
+                        isCartItem
                         title={ isOrderComplete ? 'Замовлення оформлено' : 'Корзина пуста' }
                         description={
                             isOrderComplete
