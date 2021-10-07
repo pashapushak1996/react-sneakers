@@ -178,7 +178,7 @@ function App() {
                         render={ () =>
                             <Orders/> }/>
 
-                    <Redirect from={ '/' } to={ SNEAKERS }/>
+                    <Redirect from={ '/react-sneakers' } to={ SNEAKERS }/>
                 </Switch>
             </div>
         </AppContext.Provider>
