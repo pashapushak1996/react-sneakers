@@ -31,8 +31,8 @@ export const Card = (props) => {
                 {
                     onClickPlus && <button onClick={ handleClickFavorite } className={ styles.card_icon }>
                         <img src={ isFavoriteItem(sneakers.currId)
-                            ? '/img/icons/like.svg'
-                            : '/img/icons/unlike.svg' } alt=""/>
+                            ? 'img/icons/like.svg'
+                            : 'img/icons/unlike.svg' } alt=""/>
                     </button>
                 }
                 <img src={ sneakers.imageUrl } alt=""/>
@@ -45,8 +45,8 @@ export const Card = (props) => {
                     { onClickFavorite && <button onClick={ handleClickPlus }>
                         <img src={
                             isCartItem(sneakers.currId)
-                                ? '/img/icons/success.svg'
-                                : '/img/icons/plus.svg' } alt=""/>
+                                ? 'img/icons/success.svg'
+                                : 'img/icons/plus.svg' } alt=""/>
                     </button> }
                 </div>
             </div>

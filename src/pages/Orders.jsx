@@ -61,7 +61,7 @@ export const Orders = () => {
         return <Info
             title={ 'У вас немає замовлень' }
             description={ 'Зробіть хоча б одне замовлення!' }
-            imageUrl={ '/img/noneOrders.png' }/>;
+            imageUrl={ 'img/noneOrders.png' }/>;
     }
 
     return (
@@ -71,8 +71,14 @@ export const Orders = () => {
             </div>
             <div className={ 'text-center mt-20 mb-20 ' }>Замовлення №{ orderId }</div>
             <div className={ 'd-flex justify-between mb-20 align-center ordersButtons' }>
-                <button disabled={ orderNumber === 0 } onClick={ prevOrder }>Попереднє замовлення</button>
-                <button disabled={ orderNumber >= orders.length - 1 } onClick={ nextOrder }>Наступне замовлення</button>
+                <button
+                    disabled={ orderNumber === 0 }
+                    onClick={ prevOrder }>Попереднє замовлення
+                </button>
+                <button
+                    disabled={ orderNumber >= orders.length - 1 }
+                    onClick={ nextOrder }>Наступне замовлення
+                </button>
             </div>
             <div className="content">
                 <div className="content_cards">

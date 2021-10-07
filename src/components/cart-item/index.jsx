@@ -12,7 +12,7 @@ export const CartItem = ({ sneakers, onClickRemove }) => {
                 <b>{ sneakers.price } грн</b>
             </div>
             <button onClick={ () => onClickRemove(sneakers) } className={ styles.cartItem_button }>
-                <img src="/img/icons/exit.svg" alt=""/>
+                <img src="img/icons/exit.svg" alt=""/>
             </button>
         </div>
     );

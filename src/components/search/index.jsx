@@ -9,14 +9,14 @@ export const Search = (props) => {
 
     return (
         <div className={ styles.search }>
-            <img src="/img/icons/search.svg" alt=""/>
+            <img src="img/icons/search.svg" alt=""/>
             <input
                 value={ searchValue }
                 onChange={ onChange }
                 type="text"
                 placeholder="Поиск..."/>
             { searchValue && <button onClick={ () => setSearchValue('') } className={ styles.search_btn }>
-                <img src="/img/icons/exit.svg" alt=""/>
+                <img src="img/icons/exit.svg" alt=""/>
             </button> }
         </div>
     );

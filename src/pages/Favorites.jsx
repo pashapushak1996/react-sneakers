@@ -12,7 +12,7 @@ export const Favorites = (props) => {
 
     if (!favorites.length) {
         return <Info
-            imageUrl={ '/img/noneFavorites.png' }
+            imageUrl={ 'img/noneFavorites.png' }
             description={ 'Ви нічого не додавали в улюблені.' }
             title={ 'Улюблених немає ;(' }/>;
     }

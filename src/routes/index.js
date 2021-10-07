@@ -1,5 +1,5 @@
 module.exports = {
-    SNEAKERS: '/sneakers',
+    SNEAKERS: '/react-sneakers/sneakers',
     FAVORITES: '/favorites',
     ORDERS: '/orders'
 };

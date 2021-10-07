@@ -59,7 +59,7 @@ export const Drawer = (props) => {
                 <div className="d-flex justify-between">
                     <h2>Корзина</h2>
                     <button onClick={ onClose } className={ styles.drawer_button }>
-                        <img src="/img/icons/exit.svg" alt=""/>
+                        <img src="img/icons/exit.svg" alt=""/>
                     </button>
                 </div>
                 { !cartItems.length ?
@@ -71,7 +71,7 @@ export const Drawer = (props) => {
                                 ? `Замовлення номер ${ orderNumber } скоро буде передано службі доставки`
                                 : 'Виберіть будь-ласка якийсь товар'
                         }
-                        imageUrl={ isOrderComplete ? '/img/sendOrder.svg' : '/img/emptyCart.svg' }/>
+                        imageUrl={ isOrderComplete ? 'img/sendOrder.svg' : 'img/emptyCart.svg' }/>
                     : <div className={ styles.cartItems }>
                         <div>
                             { cartItems.length ? cartItems.map((sneakers) =>
@@ -95,7 +95,7 @@ export const Drawer = (props) => {
                             </div>
                             <button disabled={ isLoading } onClick={ () => onSendOrder() } className="green_button">
                                 <span>Оформити замовлення</span>
-                                <img src="/img/icons/arrow-right.svg" alt=""/>
+                                <img src="img/icons/arrow-right.svg" alt=""/>
                             </button>
                         </div>
                     </div> }
