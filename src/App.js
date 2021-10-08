@@ -1,12 +1,7 @@
 import { useEffect, useReducer, useState } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
-import {
-    appActionCreators,
-    cartActionCreators,
-    favoritesActionCreators,
-    itemsActionCreators
-} from './actions';
+import { appActionCreators, cartActionCreators, favoritesActionCreators, itemsActionCreators } from './actions';
 
 import { Drawer, Header } from './components';
 
@@ -18,7 +13,7 @@ import { Orders } from './pages/Orders';
 
 import { initialState, reducer } from './reducers';
 
-import { FAVORITES, ORDERS, SNEAKERS } from './routes';
+import { FAVORITES, ORDERS } from './routes';
 import { sneakersService } from './services';
 
 
@@ -156,7 +151,7 @@ function App() {
                 <Header onClickCart={ () => toggleOpenedCart() }/>
                 <Switch>
                     <Route
-                        path={ SNEAKERS }
+                        path={ '/' }
                         exact
                         render={ () =>
                             <Home
@@ -178,8 +173,6 @@ function App() {
                         exact
                         render={ () =>
                             <Orders/> }/>
-
-                    <Redirect from={ '/' } to={ SNEAKERS }/>
                 </Switch>
             </div>
         </AppContext.Provider>
