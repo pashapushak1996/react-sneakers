@@ -7,6 +7,7 @@ import AppContext from '../../context';
 
 export const Info = ({ title, imageUrl, description, isCartItem }) => {
     const { setOpenedCart } = useContext(AppContext);
+
     const history = useHistory();
 
 
