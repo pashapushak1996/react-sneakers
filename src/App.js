@@ -13,7 +13,7 @@ import { Orders } from './pages/Orders';
 
 import { initialState, reducer } from './reducers';
 
-import { FAVORITES, ORDERS } from './routes';
+import { FAVORITES, HOME, ORDERS } from './routes';
 import { sneakersService } from './services';
 
 
@@ -151,7 +151,7 @@ function App() {
                 <Header onClickCart={ () => toggleOpenedCart() }/>
                 <Switch>
                     <Route
-                        path={ '/' }
+                        path={ HOME }
                         exact
                         render={ () =>
                             <Home
@@ -159,6 +159,13 @@ function App() {
                                 searchValue={ searchValue }
                                 setSearchValue={ setSearchValue }
                                 searchByValue={ searchByValue }
+                                onAddToFavorites={ onAddToFavorites }
+                                onAddToCart={ onAddToCart }/> }/>
+                    <Route
+                        path={ FAVORITES }
+                        exact
+                        render={ () =>
+                            <Favorites
                                 onAddToFavorites={ onAddToFavorites }
                                 onAddToCart={ onAddToCart }/> }/>
                     <Route
