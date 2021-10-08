@@ -162,13 +162,6 @@ function App() {
                                 onAddToFavorites={ onAddToFavorites }
                                 onAddToCart={ onAddToCart }/> }/>
                     <Route
-                        path={ FAVORITES }
-                        exact
-                        render={ () =>
-                            <Favorites
-                                onAddToFavorites={ onAddToFavorites }
-                                onAddToCart={ onAddToCart }/> }/>
-                    <Route
                         path={ ORDERS }
                         exact
                         render={ () =>
