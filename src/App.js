@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useState } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import { appActionCreators, cartActionCreators, favoritesActionCreators, itemsActionCreators } from './actions';
 
@@ -173,6 +173,7 @@ function App() {
                         exact
                         render={ () =>
                             <Orders/> }/>
+                    <Redirect to={ HOME } from={ '/' }/>
                 </Switch>
             </div>
         </AppContext.Provider>
