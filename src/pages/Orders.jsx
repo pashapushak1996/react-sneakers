@@ -15,6 +15,7 @@ export const Orders = () => {
     const [orderNumber, setOrderNumber] = useState(0);
 
     const orderItems = orders.length > 0 && orders[orderNumber].items;
+    console.log(orderItems);
     const orderId = orders.length > 0 && orders[orderNumber].id;
 
     const nextOrder = () => {
