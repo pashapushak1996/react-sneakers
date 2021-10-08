@@ -7,6 +7,7 @@ import {
     favoritesActionCreators,
     itemsActionCreators
 } from './actions';
+
 import { Drawer, Header } from './components';
 
 import AppContext from './context';
